@@ -1,0 +1,30 @@
+.login-container {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  ion-item {
+    margin-bottom: 15px;
+  }
+  
+  .submit-button {
+    --background: #28a745; /* Verde personalizado */
+    --color: white; /* Texto blanco */
+  }
+  
+  ion-button {
+    margin-top: 20px;
+  }
+  
+  ion-button[fill="clear"] {
+    margin-top: 10px;
+  }
+  ion-item ion-label {
+    margin-bottom: 10px; 
+  }

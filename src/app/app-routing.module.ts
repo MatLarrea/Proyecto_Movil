@@ -8,9 +8,15 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'stats',
     pathMatch: 'full'
   },
+
+  {
+    path: 'stats',
+    loadChildren: () => import('./stats/stats.module').then( m => m.StatsPageModule)
+  },
+
 ];
 
 @NgModule({
