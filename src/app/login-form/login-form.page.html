@@ -1,0 +1,38 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>loginForm</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref = "/"></ion-back-button>
+      </ion-buttons>
+      
+      <ion-title size="large">loginForm</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="content-container">
+    <div class="input-container">
+      <ion-item>
+        <!--[(ngModel)]: esto dice que lo que se ingrese en este campo se rellene en el modulo del nombre que le indiquemos-->
+        <ion-input placeholder="Email" type="email" [(ngModel)]="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input placeholder="Username" type="text" [(ngModel)]="user"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input placeholder="Password" type="password" [(ngModel)]="password"></ion-input>
+      </ion-item>
+    </div>
+  
+    <div class="button-container">
+      <ion-button expand="block" (click)="onLoginButtonPressed()">Login</ion-button>
+      <ion-button expand="block" (click)="onRegisterButtonPressed()">Register</ion-button>
+    </div>
+  </div>
+</ion-content>
