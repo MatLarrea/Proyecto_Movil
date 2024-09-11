@@ -4,19 +4,24 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="background">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Login</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  
-  
+  <div>
+    <ion-img src="./assets/Logo.png"></ion-img>
+  </div>
   <div class="content-container">
-    
     <div class = "container-button">
-      <ion-button class = "button" shape="round">Login</ion-button>
+      <ion-button shape="round">
+        <div class="Login">
+            Login
+        </div>
+      </ion-button>
+      <p class="Texto">Don't have an account? <a href="" class="singUp">Sing Up</a></p>
     </div>
   </div>
 </ion-content>

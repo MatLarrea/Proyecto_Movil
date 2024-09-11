@@ -5,19 +5,46 @@ ion-content {
     display: flex;
     justify-content: center; /* Centra verticalmente si necesitas */
     align-items: center; /* Centra horizontalmente */
-    
+    font-family: "Nunito", sans-serif;
 }
-
+ion-content.background{
+    --background: url(../../assets/Bg.jpg) 100% 100% no-repeat;
+}
     
 
 .content-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-end; /* Asegura que los botones estén en la parte inferior */
+    justify-content: center;
     width: 100%;
+    margin-top: 50%;
     padding: 32px; /* Espacio a los lados */
     gap: 16px; /* Espacio entre input-container y button-container */
-    height: 100%; /* Asegura que el contenedor ocupe todo el espacio disponible */
+    
 }
 
+ion-button{
+    --background: #00BF86;
+    width: 293px;
+    height: 54.0545px;
+    
+}
+
+.Login{
+    color: #fff;
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: bold;
+    font-family: Roboto Mono, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+}
+
+.Texto{
+    color: #ffff;
+    text-align: center;
+    height: max-content;
+}
+
+.singUp{
+    color: #FF9191;
+}
