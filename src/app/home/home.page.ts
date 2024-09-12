@@ -14,6 +14,7 @@ export class HomePage {
   edad: number = 0;
   nivelActividad: string = '';
   meta: string = '';
+  genero: string= '';
   caloriasDiarias: number = 0;
   caloriasConsumidas: number = 0;
 
@@ -26,6 +27,7 @@ export class HomePage {
         this.edad = params['edad'] || 0;
         this.nivelActividad = params['nivelActividad'] || '';
         this.meta = params['meta'] || '';
+        this.genero = params['genero'] || '';
         this.caloriasDiarias = this.calcularCaloriasDiarias();
       }
     });

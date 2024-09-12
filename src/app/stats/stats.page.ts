@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController } from '@ionic/angular'; // Para navegar entre páginas
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-stats',
@@ -10,7 +10,7 @@ import { NavController } from '@ionic/angular'; // Para navegar entre páginas
 export class StatsPage {
   statsForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private navCtrl: NavController) {
+  constructor(private formBuilder: FormBuilder, private router: Router) {
     this.statsForm = this.formBuilder.group({
       nickname: ['', Validators.required],
       altura: ['', Validators.required],
@@ -26,7 +26,7 @@ export class StatsPage {
   onSubmit() {
     if (this.statsForm.valid) {
       // Navegación a la página 'home', pasando los datos del formulario
-      this.navCtrl.navigateForward('/home', {
+      this.router.navigate(['/home'], {
         queryParams: { ...this.statsForm.value }
       });
     }
