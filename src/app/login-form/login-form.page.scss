@@ -13,3 +13,17 @@ ion-content {
     gap: 16px; /* Espacio entre input-container y button-container */
     height: 100%; /* Asegura que el contenedor ocupe todo el espacio disponible */
  }
+
+ion-button{
+  --background: #00BF86;
+
+  
+}
+
+.texto{
+  color: #fff;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: bold;
+  font-family: Roboto Mono, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+}

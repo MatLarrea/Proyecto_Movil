@@ -8,7 +8,8 @@ ion-content {
     font-family: "Nunito", sans-serif;
 }
 ion-content.background{
-    --background: url(../../assets/Bg.jpg) 100% 100% no-repeat;
+    --background: url(../../assets/Bg.jpg) no-repeat center center / cover;
+    background-size: cover;
 }
     
 

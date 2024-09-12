@@ -7,7 +7,31 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
+
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref = "/"></ion-back-button>
+      </ion-buttons>
+
       <ion-title size="large">register</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <div class="content-container">
+    
+      <ion-item>
+        <!--[(ngModel)]: esto dice que lo que se ingrese en este campo se rellene en el modulo del nombre que le indiquemos-->
+        <ion-input placeholder="Email" type="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input placeholder="Username" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input placeholder="Password" type="password"></ion-input>
+      </ion-item>
+ 
+  
+
+      <ion-button class="texto" expand="block">Register</ion-button>
+
+  </div>
 </ion-content>
