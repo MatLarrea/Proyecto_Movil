@@ -11,7 +11,6 @@ export class LoginFormPage implements OnInit {
 
   constructor(private router: Router, private sessionManager: SessionManager){ }
   
-  email: string = '';
   user: string = '';
   password: string = '';
     
@@ -21,7 +20,7 @@ export class LoginFormPage implements OnInit {
 
   onLoginButtonPressed() {
     if(this.sessionManager.performLogin(this.user, this.password)) {
-      this.router.navigate(['/stats'], {queryParams: { email: this.email }});
+      this.router.navigate(['/stats']);
     } else {
       this.user=''
       this.password=''
