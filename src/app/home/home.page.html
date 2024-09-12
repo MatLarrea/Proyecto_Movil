@@ -26,6 +26,7 @@
         <p>Genero: {{genero}}</p>
         <p>Calorías diarias: {{caloriasDiarias}}</p>
         <p><strong>Calorías consumidas: {{caloriasConsumidas}}</strong></p>
+        <p><strong>Calorías Restantes: {{caloriasDiarias}}</strong></p>
       </ion-card-content>
     </ion-card>
 
@@ -34,7 +35,7 @@
     <ion-list>
       <ion-item *ngFor="let meal of ['Mañana', 'Tarde', 'Noche']">
         <ion-label>{{meal}}</ion-label>
-        <ion-button fill="outline">Añadir alimento</ion-button>
+        <ion-button (click)="openFoodModal()">Agregar Alimento</ion-button>
       </ion-item>
     </ion-list>
 
