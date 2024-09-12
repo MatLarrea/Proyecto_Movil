@@ -19,7 +19,8 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
-  },  {
+  },
+  {
     path: 'login-form',
     loadChildren: () => import('./login-form/login-form.module').then( m => m.LoginFormPageModule)
   },
@@ -28,6 +29,10 @@ const routes: Routes = [
     loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
   },
 
+  {
+    path: 'stats',
+    loadChildren: () => import('./stats/stats.module').then( m => m.StatsPageModule)
+  },
 
 ];
 

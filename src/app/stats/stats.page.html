@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Stats</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="login-container">
+    <h1>¡Bienvenido a Pokefit!</h1>
+    <form [formGroup]="statsForm" (ngSubmit)="onSubmit()">
+      <ion-item>
+        <ion-label position="floating">Nick name</ion-label>
+        <ion-input formControlName="nickname" type="text" placeholder="Nombre o apodo"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Altura</ion-label>
+        <ion-input formControlName="altura" type="number" placeholder=" ejemplo 174 (centimetros)"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Peso</ion-label>
+        <ion-input formControlName="peso" type="number" placeholder="peso en kilos"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Edad</ion-label>
+        <ion-input formControlName="edad" type="number" placeholder="edad"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Nivel de actividad</ion-label>
+        <ion-select formControlName="nivelActividad">
+          <ion-select-option value="baja">Baja</ion-select-option>
+          <ion-select-option value="media">Media</ion-select-option>
+          <ion-select-option value="alta">Alta</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Meta</ion-label>
+        <ion-select formControlName="meta">
+          <ion-select-option value="perder_peso">Perder peso</ion-select-option>
+          <ion-select-option value="mantener">Mantener</ion-select-option>
+          <ion-select-option value="ganar_peso">Ganar peso</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Genero</ion-label>
+        <ion-select formControlName="genero">
+          <ion-select-option value="masculino">Masculino</ion-select-option>
+          <ion-select-option value="femenino">Femenino</ion-select-option>
+          
+        </ion-select>
+      </ion-item>
+
+      <ion-button expand="block" type="submit">Siguiente</ion-button>
+    </form>
+
+    
+  </div>
+</ion-content>
+
