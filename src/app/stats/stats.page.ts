@@ -1,33 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NavController } from '@ionic/angular'; // Para navegar entre páginas
 
 @Component({
   selector: 'app-stats',
   templateUrl: './stats.page.html',
   styleUrls: ['./stats.page.scss'],
 })
-export class StatsPage implements OnInit {
-  statsForm: FormGroup = this.formBuilder.group({});
+export class StatsPage {
+  statsForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {}
-
-  ngOnInit() {
+  constructor(private formBuilder: FormBuilder, private navCtrl: NavController) {
     this.statsForm = this.formBuilder.group({
-      nickname: ['', [Validators.required]],
-      height: ['', [Validators.required, Validators.min(1)]],
-      weight: ['', [Validators.required, Validators.min(1)]],
-      age: ['', [Validators.required, Validators.min(1)]],
-      activityLevel: ['', [Validators.required]],
-      goal: ['', [Validators.required]]
+      nickname: ['', Validators.required],
+      altura: ['', Validators.required],
+      peso: ['', Validators.required],
+      edad: ['', Validators.required],
+      nivelActividad: ['', Validators.required],
+      meta: ['', Validators.required],
+      genero: ['', Validators.required],
+
     });
   }
 
   onSubmit() {
     if (this.statsForm.valid) {
-      console.log(this.statsForm.value);
-      // Aquí puedes manejar el envío del formulario
-    } else {
-      console.log('Form not valid');
+      // Navegación a la página 'home', pasando los datos del formulario
+      this.navCtrl.navigateForward('/home', {
+        queryParams: { ...this.statsForm.value }
+      });
     }
   }
 }

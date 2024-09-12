@@ -1,20 +1,48 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title>Perfil de {{nickname}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blankkkk</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <div class="profile-info">
+    <ion-item>
+      <ion-avatar slot="start">
+        <!-- Imagen de avatar -->
+        <img src="assets/avatar.png">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{nickname}}</h2>
+        <p>Meta: {{meta}}</p>
+      </ion-label>
+    </ion-item>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <ion-card>
+      <ion-card-content>
+        <p>Peso inicial: {{peso}}kg</p>
+        <p>Altura: {{altura}}cm</p>
+        <p>Edad: {{edad}} años</p>
+        <p>Nivel de actividad: {{nivelActividad}}</p>
+        <p>Calorías diarias: {{caloriasDiarias}}</p>
+        <p><strong>Calorías consumidas: {{caloriasConsumidas}}</strong></p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Lista de alimentos -->
+    <h2>Alimentos Consumidos</h2>
+    <ion-list>
+      <ion-item *ngFor="let meal of ['Mañana', 'Tarde', 'Noche']">
+        <ion-label>{{meal}}</ion-label>
+        <ion-button fill="outline">Añadir alimento</ion-button>
+      </ion-item>
+    </ion-list>
+
+    <!-- Calorías totales -->
+    <ion-footer>
+      <ion-toolbar>
+        <ion-title>Calorías consumidas: {{caloriasConsumidas}}</ion-title>
+      </ion-toolbar>
+    </ion-footer>
   </div>
 </ion-content>
+
