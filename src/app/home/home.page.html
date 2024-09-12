@@ -8,7 +8,6 @@
   <div class="profile-info">
     <ion-item>
       <ion-avatar slot="start">
-        <!-- Imagen de avatar -->
         <img src="assets/avatar.png">
       </ion-avatar>
       <ion-label>
@@ -26,25 +25,42 @@
         <p>Genero: {{genero}}</p>
         <p>Calorías diarias: {{caloriasDiarias}}</p>
         <p><strong>Calorías consumidas: {{caloriasConsumidas}}</strong></p>
-        <p><strong>Calorías Restantes: {{caloriasDiarias}}</strong></p>
+        <p><strong>Calorías restantes: {{caloriasRestantes}}</strong></p>
       </ion-card-content>
     </ion-card>
 
-    <!-- Lista de alimentos -->
-    <h2>Alimentos Consumidos</h2>
+    <!-- Mañana -->
+    <h2>Alimentos Consumidos Mañana</h2>
     <ion-list>
-      <ion-item *ngFor="let meal of ['Mañana', 'Tarde', 'Noche']">
-        <ion-label>{{meal}}</ion-label>
-        <ion-button (click)="openFoodModal()">Agregar Alimento</ion-button>
+      <ion-item *ngFor="let alimento of alimentosManana">
+        <ion-label>{{alimento.nombre}} ({{alimento.calorias}} kcal)</ion-label>
       </ion-item>
     </ion-list>
+    <ion-button expand="block" (click)="openFoodModal('mañana')">Añadir alimento Mañana</ion-button>
+
+    <!-- Tarde -->
+    <h2>Alimentos Consumidos Tarde</h2>
+    <ion-list>
+      <ion-item *ngFor="let alimento of alimentosTarde">
+        <ion-label>{{alimento.nombre}} ({{alimento.calorias}} kcal)</ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-button expand="block" (click)="openFoodModal('tarde')">Añadir alimento Tarde</ion-button>
+
+    <!-- Noche -->
+    <h2>Alimentos Consumidos Noche</h2>
+    <ion-list>
+      <ion-item *ngFor="let alimento of alimentosNoche">
+        <ion-label>{{alimento.nombre}} ({{alimento.calorias}} kcal)</ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-button expand="block" (click)="openFoodModal('noche')">Añadir alimento Noche</ion-button>
 
     <!-- Calorías totales -->
     <ion-footer>
       <ion-toolbar>
-        <ion-title>Calorías consumidas: {{caloriasConsumidas}}</ion-title>
+        <ion-title>Total Calorías: {{caloriasConsumidas}}</ion-title>
       </ion-toolbar>
     </ion-footer>
   </div>
 </ion-content>
-
