@@ -1,30 +1,75 @@
 .login-container {
-    max-width: 400px;
-    margin: 0 auto;
-    text-align: center;
-  }
-  
-  h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  ion-item {
-    margin-bottom: 15px;
-  }
-  
-  .submit-button {
-    --background: #28a745; /* Verde personalizado */
-    --color: white; /* Texto blanco */
-  }
-  
-  ion-button {
-    margin-top: 20px;
-  }
-  
-  ion-button[fill="clear"] {
-    margin-top: 10px;
-  }
-  ion-item ion-label {
-    margin-bottom: 10px; 
-  }
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+ion-item {
+  margin-bottom: 15px;
+  --border-radius: 15px; /* Bordes redondeados */
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --background: #363232; /* Color de fondo de los campos */
+  border-radius: 15px; /* Aplica el borde redondeado */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera para darle profundidad */
+}
+
+/* Estilo para el ion-input */
+ion-input {
+  --padding-start: 10px;
+  --background: transparent;
+  font-size: 16px;
+}
+
+/* Bordes redondeados y estilo para ion-select */
+ion-select {
+  --border-radius: 15px;
+  --background: #363232;
+}
+
+/* Botón de envío con bordes redondeados */
+.submit-button {
+  --background: #28a745; /* Verde personalizado */
+  --color: white; /* Texto blanco */
+  --border-radius: 20px; /* Bordes redondeados */
+  padding: 10px 0;
+  margin-top: 20px;
+}
+
+/* Estilo del ion-button genérico */
+ion-button {
+  margin-top: 20px;
+  --border-radius: 20px;
+  --background: #00BF86; /* Color verde para otros botones */
+  --color: white;
+  padding: 10px 0;
+}
+
+/* Botones con fondo transparente (clear) */
+ion-button[fill="clear"] {
+  margin-top: 10px;
+}
+
+/* Estilo de las etiquetas */
+ion-item ion-label {
+  margin-bottom: 10px;
+}
+
+/* Fondo con imagen en ion-content */
+ion-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  --background: none;
+  background-image: url('/assets/Bg.jpg'); /* Imagen de fondo */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
+}

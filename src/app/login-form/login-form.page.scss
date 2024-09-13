@@ -1,0 +1,36 @@
+ion-content {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    --background: none; 
+    background-image: url('/assets/Bg.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .content-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Asegura que los botones estén en la parte inferior */
+    width: 100%;
+    padding: 32px; /* Espacio a los lados */
+    gap: 100px; /* Espacio entre input-container y buttons-container */
+    height: 100%; /* Asegura que el contenedor ocupe todo el espacio disponible */
+ }
+
+ion-button{
+  --background: #00BF86;
+
+  
+}
+
+.texto{
+  color: #fff;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: bold;
+  font-family: Roboto Mono, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+}

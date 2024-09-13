@@ -1,0 +1,24 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="background">
+  <ion-header collapse="condense">
+  </ion-header>
+
+  <div>
+    <ion-img src="./assets/Logo.png"></ion-img>
+  </div>
+  <div class="content-container">
+    <div class = "container-button" (click)="onLoginButtonPressed()">
+      <ion-button shape="round">
+        <div class="Login">
+            Login
+        </div>
+      </ion-button>
+      <p class="Texto">Don't have an account? <a href="/register" class="singUp">Sing Up</a></p>
+    </div>
+  </div>
+</ion-content>

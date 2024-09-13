@@ -16,9 +16,12 @@ export class FoodModalComponent {
     { nombre: 'Manzana', calorias: 52 },
     { nombre: 'Plátano', calorias: 89 },
     { nombre: 'Pollo', calorias: 239 },
-    { nombre: 'Carne de res', calorias: 400 },
-    { nombre: 'Carne de cerdo', calorias: 400 },
-    { nombre: 'media barra de chocolate', calorias: 600 },
+    { nombre: 'Pera', calorias: 52 },
+    { nombre: 'Calabazo', calorias: 89 },
+    { nombre: 'Naranja', calorias: 239 },
+    { nombre: 'Carne', calorias: 52 },
+    { nombre: 'Tomate', calorias: 89 },
+    { nombre: 'Maní', calorias: 239 },
   ];
 
   constructor(private modalCtrl: ModalController) {}

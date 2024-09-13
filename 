@@ -1,0 +1,15 @@
+* [33mcc3bb2e[m[33m ([m[1;31morigin/Felipe[m[33m)[m se agrego logica de calculo de calorías
+* [33mac43ea2[m[33m ([m[1;32mFelipe[m[33m)[m se agrego modal
+* [33mbffccf3[m se agrego genero
+* [33m491c953[m boton siguiente lleva el formulario al home
+* [33m4761c2e[m generando los stats
+* [33m8310dc3[m probando
+[31m|[m * [33m21140a9[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mMatias[m[33m, [m[1;31morigin/Matias[m[33m)[m Diseño de splash y login, navegación entre vistas
+[31m|[m * [33m6b29231[m Creación page: register, loginForm implementación inicial navegación
+[31m|[m * [33m822e3c7[m[33m ([m[1;31morigin/dev[m[33m, [m[1;32mdev[m[33m)[m Creación login y splash primer diseño login
+[31m|[m * [33m69e1e56[m Clase-06-09
+[31m|[m[31m/[m  
+* [33m95ea16c[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m Update README.md
+* [33m7d58c82[m update readme.md
+* [33m72465ca[m first commit
+* [33m0e5253b[m Initial commit
