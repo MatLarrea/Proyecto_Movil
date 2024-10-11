@@ -22,6 +22,7 @@ export class FoodModalComponent {
     { nombre: 'Carne', calorias: 52 },
     { nombre: 'Tomate', calorias: 89 },
     { nombre: 'Maní', calorias: 239 },
+    
   ];
 
   constructor(private modalCtrl: ModalController) {}

@@ -68,3 +68,15 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json
+
+
+#asdasd
+src/enviroments/enviroments
+
+Proyecto_Movil\src\environments\environment.prod.ts
+Proyecto_Movil\src\environments\firebaseConfig.ts

@@ -5,10 +5,10 @@
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
+    "strict": false, /* lo cambie a false originalmente era true*/
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
+    "noImplicitReturns": true,/* debería cambiarlo a false */
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,

@@ -18,20 +18,20 @@
 
   <div class="content-container">
     <img src="./assets/Logo.png" alt="">
-      <ion-item>
-        <!--[(ngModel)]: esto dice que lo que se ingrese en este campo se rellene en el modulo del nombre que le indiquemos-->
-        <ion-input placeholder="Email" type="email"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input placeholder="Username" type="text"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input placeholder="Password" type="password"></ion-input>
-      </ion-item>
- 
-  
-
-      <ion-button class="texto" expand="block">Register</ion-button>
+    <div class="content-container">
+      <div class="input-container">
+        <ion-item>
+          <ion-input placeholder="Correo electrónico" type="email" [(ngModel)]="email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input placeholder="Contraseña" type="password" [(ngModel)]="password"></ion-input>
+        </ion-item>
+      </div>
+      
+      <div class="buttons-container">
+        <ion-button class="texto" expand="block" (click)="onRegisterButtonPressed()">Registrar</ion-button>
+      </div> 
+    </div>
 
   </div>
 </ion-content>

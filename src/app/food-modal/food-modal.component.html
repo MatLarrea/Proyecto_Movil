@@ -7,7 +7,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="modal-content">
+  
   <ion-list>
     <ion-item *ngFor="let alimento of alimentos">
       <ion-label>{{alimento.nombre}} ({{alimento.calorias}} kcal)</ion-label>
@@ -17,5 +18,7 @@
 </ion-content>
 
 <ion-footer>
-  <ion-button expand="block" (click)="addFood()">Añadir Alimento</ion-button>
+  <ion-toolbar>
+    <ion-button expand="block" (click)="addFood()">Añadir Alimento</ion-button>
+  </ion-toolbar>
 </ion-footer>

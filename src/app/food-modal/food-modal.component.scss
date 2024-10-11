@@ -1,0 +1,19 @@
+.modal-content {
+    --padding-bottom: 56px; /* Espacio reservado para el footer */
+    --height: 80%;  /* El modal ocupará el 100% del alto de la pantalla */
+  --width: 80%; 
+  }
+  
+  ion-content {
+    --padding-bottom: 56px; /* Reserva espacio en la parte inferior */
+    height: 80%; /* Ocupa todo el espacio disponible */
+    overflow-y: auto; /* Permite el scroll dentro del ion-content */
+  }
+  
+  ion-footer {
+    position: relative; /* Asegura que no esté fijo para que no interfiera con el scroll */
+    height: 56px;
+    background-color: white;
+    z-index: 10;
+  }
+  
