@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-// Importar métodos de autenticación de Firebase
+import { AlertController } from '@ionic/angular'; // Importar AlertController
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 @Component({
@@ -13,7 +13,7 @@ export class LoginFormPage implements OnInit {
   user: string = '';
   password: string = '';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private alertController: AlertController) { } // Inyectar AlertController
 
   ngOnInit() {}
 
@@ -37,16 +37,26 @@ export class LoginFormPage implements OnInit {
         
         // Mostrar mensaje según el tipo de error de Firebase
         if (error.code === 'auth/user-not-found') {
-          alert('Usuario no encontrado.');
+          this.showAlert('Usuario no encontrado.');
         } else if (error.code === 'auth/wrong-password') {
-          alert('Contraseña incorrecta.');
+          this.showAlert('Contraseña incorrecta.');
         } else {
-          alert('Las credenciales ingresadas son inválidas.');
+          this.showAlert('Las credenciales ingresadas son inválidas.');
         }
       }
     } else {
-      alert('Por favor ingresa un usuario y una contraseña.');
+      this.showAlert('Por favor ingresa un usuario y una contraseña.');
     }
+  }
+
+  // Método para mostrar alertas usando Ionic
+  async showAlert(message: string) {
+    const alert = await this.alertController.create({
+      header: 'Error',
+      message: message,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 
   // Método para redirigir al registro

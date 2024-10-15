@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-// Importar métodos de autenticación de Firebase
+import { AlertController } from '@ionic/angular'; // Importar AlertController
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 
 @Component({
@@ -13,7 +13,7 @@ export class RegisterPage implements OnInit {
   email: string = '';
   password: string = '';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private alertController: AlertController) { } // Inyectar AlertController
 
   ngOnInit() {}
 
@@ -28,22 +28,32 @@ export class RegisterPage implements OnInit {
         
         // Redirigir al usuario a la página de inicio de sesión o a otra página
         this.router.navigate(['/login-form']);
-        alert('Usuario registrado con éxito.');
+        this.showAlert('Usuario registrado con éxito.');
       } catch (error: any) {
         // Manejar errores de registro
         console.error('Error en el registro:', error);
         if (error.code === 'auth/email-already-in-use') {
-          alert('El correo ya está en uso.');
+          this.showAlert('El correo ya está en uso.');
         } else if (error.code === 'auth/invalid-email') {
-          alert('El correo no es válido.');
+          this.showAlert('El correo no es válido.');
         } else if (error.code === 'auth/weak-password') {
-          alert('La contraseña es muy débil. Debe tener al menos 6 caracteres.');
+          this.showAlert('La contraseña es muy débil. Debe tener al menos 6 caracteres.');
         } else {
-          alert('Error en el registro. Inténtalo de nuevo.');
+          this.showAlert('Error en el registro. Inténtalo de nuevo.');
         }
       }
     } else {
-      alert('Por favor ingresa un correo y una contraseña.');
+      this.showAlert('Por favor ingresa un correo y una contraseña.');
     }
+  }
+
+  // Método para mostrar alertas usando Ionic
+  async showAlert(message: string) {
+    const alert = await this.alertController.create({
+      header: 'Información',
+      message: message,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 }
