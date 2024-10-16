@@ -1,24 +1,51 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Añadir Alimento</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="dismiss()">Cerrar</ion-button>
-    </ion-buttons>
+    <ion-title>Alimentos</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="modal-content">
-  
+<ion-content>
   <ion-list>
     <ion-item *ngFor="let alimento of alimentos">
-      <ion-label>{{alimento.nombre}} ({{alimento.calorias}} kcal)</ion-label>
-      <ion-checkbox [(ngModel)]="alimento.selected"></ion-checkbox>
+      <ion-label>
+        <h2>{{ alimento.nombre }} ({{ alimento.calorias }} cal)</h2>
+        <p>Proteínas: {{ alimento.proteinas }}g</p>
+        <p>Carbohidratos: {{ alimento.carbohidratos }}g</p>
+        <p>Unidad: {{ alimento.unidad }}</p>
+      </ion-label>
+      <ion-checkbox slot="end" [(ngModel)]="alimento.selected"></ion-checkbox>
     </ion-item>
   </ion-list>
-</ion-content>
 
-<ion-footer>
-  <ion-toolbar>
-    <ion-button expand="block" (click)="addFood()">Añadir Alimento</ion-button>
-  </ion-toolbar>
-</ion-footer>
+  <ion-button expand="block" (click)="addFood()">Agregar Seleccionados</ion-button>
+  <ion-button expand="block" color="primary" (click)="toggleFormulario()">Agregar Nuevo Alimento</ion-button>
+
+  <!-- Formulario para agregar nuevo alimento -->
+  <div *ngIf="mostrarFormulario">
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input [(ngModel)]="nuevoAlimento.nombre"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Calorías</ion-label>
+      <ion-input type="number" [(ngModel)]="nuevoAlimento.calorias"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Proteínas (g)</ion-label>
+      <ion-input type="number" [(ngModel)]="nuevoAlimento.proteinas"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Carbohidratos (g)</ion-label>
+      <ion-input type="number" [(ngModel)]="nuevoAlimento.carbohidratos"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Unidad</ion-label>
+      <ion-input type="number" [(ngModel)]="nuevoAlimento.unidad"></ion-input>
+    </ion-item>
+
+    <ion-footer>
+      <ion-button expand="block" color="danger" (click)="toggleFormulario()">Cancelar</ion-button>
+      <ion-button expand="block" color="success" (click)="crearAlimento()">Agregar</ion-button>
+    </ion-footer>
+  </div>
+</ion-content>

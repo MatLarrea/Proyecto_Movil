@@ -7,6 +7,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FoodModalComponent } from './food-modal/food-modal.component';
+
 import { FormsModule } from '@angular/forms';
 
 
@@ -40,7 +41,7 @@ import { FirebaseService } from 'src/app/service/firebase.service';
      
 
  provideFirestore(() => getFirestore()), provideDatabase(() => getDatabase()), provideMessaging(() => getMessaging()), provideStorage(() => getStorage()),FirebaseService],
-  
+ 
   bootstrap: [AppComponent],
 })
 export class AppModule {}
