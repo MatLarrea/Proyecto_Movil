@@ -2,6 +2,13 @@ ion-content {
     display: flex;
     justify-content: center; /* Centra verticalmente si necesitas */
     align-items: center; /* Centra horizontalmente */
+    --background: none; 
+    background-image: url('/assets/Bg.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
   }
   
   .content-container {

@@ -3,6 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { FoodModalComponent } from '../food-modal/food-modal.component';
 
+
+import { addIcons } from 'ionicons';
+import { library, playCircle, radio, search } from 'ionicons/icons';
+
 interface Alimento {
   nombre: string;
   calorias: number;
@@ -92,6 +96,9 @@ export class HomePage {
   async openFoodModal(franja: 'mañana' | 'tarde' | 'noche') {
     const modal = await this.modalCtrl.create({
       component: FoodModalComponent,
+          
+      
+      
     });
 
     modal.onDidDismiss().then((data) => {
@@ -134,5 +141,19 @@ export class HomePage {
 
   calcularCaloriasRestante() {
     this.caloriasRestantes = Math.round(this.caloriasDiarias - this.caloriasConsumidas); 
+  }
+}
+
+
+
+
+export class ExampleComponent {
+  constructor() {
+    /**
+     * Any icons you want to use in your application
+     * can be registered in app.component.ts and then
+     * referenced by name anywhere in your application.
+     */
+    addIcons({ library, playCircle, radio, search });
   }
 }
