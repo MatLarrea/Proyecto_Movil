@@ -1,23 +1,16 @@
 import { Injectable } from '@angular/core';
-
+import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/compat/auth';
 @Injectable({
   providedIn: 'root',
 })
 
 export class SessionManager {
 
-    private readonly temporaryUserName: string = 'userTest';
-    private readonly temporaryPass: string = 'passTest';
+    constructor(private fireAuth: AngularFireAuth){
 
-    performLogin(user: string, password: string): boolean {
-        if(user == this.temporaryUserName && password == this.temporaryPass) {
-            return true;
-        } else {
-            return false;
-        }  
     }
 
-    performLogout() {
-        //TODO
+    async signOut(){
+        return await this.fireAuth.signOut();
     }
 }

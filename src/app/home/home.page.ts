@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { FoodModalComponent } from '../food-modal/food-modal.component';
-
-
+import { SessionManager } from 'Managers/sessionManager';
+import { StorageService } from '../service/Storage.service';
 import { addIcons } from 'ionicons';
 import { library, playCircle, radio, search } from 'ionicons/icons';
+import { user } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 interface Alimento {
   nombre: string;
@@ -34,22 +36,31 @@ export class HomePage {
   alimentosTarde: Alimento[] = [];
   alimentosNoche: Alimento[] = [];
 
-  constructor(private route: ActivatedRoute, private modalCtrl: ModalController) {
-    this.route.queryParams.subscribe(params => {
-      if (params) {
-        this.nickname = params['nickname'] || '';
-        this.altura = params['altura'] || 0;
-        this.peso = params['peso'] || 0;
-        this.edad = params['edad'] || 0;
-        this.nivelActividad = params['nivelActividad'] || '';
-        this.meta = params['meta'] || '';
-        this.genero = params['genero'] || '';
-        this.caloriasDiarias = this.calcularCaloriasDiarias();
-        this.calcularCaloriasRestante();
-      }
-    });
+  
+
+  constructor(private router: Router, private route: ActivatedRoute, private modalCtrl: ModalController, private sessionManager: SessionManager, private storageService: StorageService) {
+    
+      this.caloriasDiarias = this.calcularCaloriasDiarias();
+      this.calcularCaloriasRestante();
+    
   }
 
+  ngOnInit() {
+    this.loadUserData();
+  }
+
+  async ionViewDidEnter() {
+    const user = await this.storageService.get('user');
+    if (!user) {
+      console.log('No se encontraron datos del usuario.');
+    }
+
+    const userData = await this.storageService.get('userStats')
+    if (!userData) {
+      console.log('No se encontraron datos de stats.');
+    }
+  }
+  
   calcularCaloriasDiarias(): number {
     let metabolismoBasal: number;
   
@@ -142,18 +153,25 @@ export class HomePage {
   calcularCaloriasRestante() {
     this.caloriasRestantes = Math.round(this.caloriasDiarias - this.caloriasConsumidas); 
   }
-}
 
+  async loadUserData() {
 
+    const userData = await this.storageService.get('userStats');
 
+    this.nickname = userData['nickname'];
+    this.altura = userData['altura'];
+    this.peso = userData['peso'];
+    this.edad = userData['edad'];
+    this.nivelActividad = userData['nivelActividad'];
+    this.meta = userData['meta'];
+    this.genero = userData['genero'];
+    
+  }
 
-export class ExampleComponent {
-  constructor() {
-    /**
-     * Any icons you want to use in your application
-     * can be registered in app.component.ts and then
-     * referenced by name anywhere in your application.
-     */
-    addIcons({ library, playCircle, radio, search });
+  async singOut() {
+    await this.storageService.clear();
+    this.sessionManager.signOut();
+    this.router.navigate(['/splash']);
   }
 }
+
