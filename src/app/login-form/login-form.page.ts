@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { AlertControllerService } from '../service/AlertController.service';
+import { userLoginUseCase } from '../use-cases/user-login.use-case';
 import { StorageService } from '../service/Storage.service';
 
 @Component({
@@ -11,59 +11,36 @@ import { StorageService } from '../service/Storage.service';
 })
 export class LoginFormPage implements OnInit {
 
-  user: string = '';
+  email: string = '';
   password: string = '';
 
-  constructor(private router: Router, private alertControllerService: AlertControllerService, private storageService: StorageService) { } 
+  constructor(private router: Router, private alertControllerService: AlertControllerService, private userLogin: userLoginUseCase,private storageService: StorageService) { } 
 
   ngOnInit() {}
 
-  // Método para iniciar sesión utilizando Firebase directamente
   async onLoginButtonPressed() {
-    if (this.user && this.password) { // Validación para que no esté vacío
-      try {
-        const auth = getAuth(); // Obtener la instancia de autenticación
-        
-        // Intentamos hacer login con el método nativo de Firebase
-        const userCredential = await signInWithEmailAndPassword(auth, this.user, this.password);
-        
-        
-        const user = userCredential.user;
-        const userData = {
-          
-          uid: user.uid,
-          email: user.email,
-          emailVerified: user.emailVerified,
-          displayName: user.displayName,
-          photoURL: user.photoURL
 
-        }
-
-        await this.storageService.set('user', userData);
-        console.log('Login exitoso:', this.storageService.get('user'));
-        // Si el login es exitoso, redirigimos al usuario a la página de estadísticas
-        this.router.navigate(['/stats']);
-      } catch (error: any) {
-        // Manejar errores de autenticación
-        console.error('Error en la autenticación:', error);
-        this.user = '';
-        this.password = '';
+    const result = await this.userLogin.performeLogin(this.email, this.password);
         
-        // Mostrar mensaje según el tipo de error de Firebase
-        if (error.code === 'auth/user-not-found') {
-          this.alertControllerService.showAlert('Usuario no encontrado.');
-        } else if (error.code === 'auth/wrong-password') {
-          this.alertControllerService.showAlert('Contraseña incorrecta.');
-        } else {
-          this.alertControllerService.showAlert('Las credenciales ingresadas son inválidas.');
-        }
+    if(result.success){
+      
+      this.alertControllerService.showAlert(result.message, '¡Bienvenido!');
+      if(result.firsLoginStatus){
+        this.router.navigate(['/home'])
+      }else{
+        this.router.navigate(['/stats'])
       }
-    } else {
-      this.alertControllerService.showAlert('Por favor ingresa un usuario y una contraseña.');
-    }
-  }
+ 
+    }else{
+      
+      this.alertControllerService.showAlert(result.message, '¡Error!')
+    }     
+        
 
+        
   
+
+  }
   // Método para redirigir al registro
   onRegisterButtonPressed() {
     this.router.navigate(['/register']);

@@ -12,11 +12,11 @@ export class AlertControllerService {
     }
 
   // Método para mostrar alertas usando Ionic
-  async showAlert(message: string) {
+  async showAlert(message: string, header: string) {
     const alert = await this.alertController.create({
-      header: 'Error',
+      header: header,
       message: message,
-      buttons: ['OK']
+      buttons: ['Aceptar']
     });
     await alert.present();
   }

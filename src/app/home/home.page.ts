@@ -54,11 +54,6 @@ export class HomePage {
     if (!user) {
       console.log('No se encontraron datos del usuario.');
     }
-
-    const userData = await this.storageService.get('userStats')
-    if (!userData) {
-      console.log('No se encontraron datos de stats.');
-    }
   }
   
   calcularCaloriasDiarias(): number {
@@ -156,8 +151,8 @@ export class HomePage {
 
   async loadUserData() {
 
-    const userData = await this.storageService.get('userStats');
-
+    const userData = await this.storageService.get('user');
+    console.log("datos usuario: ", userData);
     this.nickname = userData['nickname'];
     this.altura = userData['altura'];
     this.peso = userData['peso'];

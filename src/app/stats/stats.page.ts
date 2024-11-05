@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { StorageService } from '../service/Storage.service';
+import { userUpdateUseCase } from '../use-cases/user-update.use-case';
 
 @Component({
   selector: 'app-stats',
@@ -13,7 +14,7 @@ export class StatsPage {
   statsForm: FormGroup;
 
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private storageService: StorageService) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private storageService: StorageService, private userUpdate: userUpdateUseCase) {
     
     this.statsForm = this.formBuilder.group({
       nickname: ['', Validators.required],
@@ -45,10 +46,11 @@ export class StatsPage {
     if (this.statsForm.valid) {
       // Navegación a la página 'home', pasando los datos del formulario
       try{
-        this.storageService.set('userStats', userStats)
-        console.log('User Stats', this.storageService.get('userStats'))
+        this.userUpdate.updateStats(userStats.nickname, userStats.altura, userStats.peso, userStats.edad, userStats.nivelActividad, userStats.meta, userStats.genero)
+        
+        console.log('User Stats', this.storageService.get('user'))
         this.router.navigate(['/home'], {
-        //queryParams: { ...this.statsForm.value }
+        
       });
       }catch (error) {
         console.error('Error al cargar stats en la persistencia')
