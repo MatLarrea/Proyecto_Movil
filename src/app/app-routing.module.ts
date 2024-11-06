@@ -12,10 +12,7 @@ const routes: Routes = [
     redirectTo: 'splash',
     pathMatch: 'full'
   },  
-  {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  },
+  
   {
     path: 'login-form',
     loadChildren: () => import('./login-form/login-form.module').then( m => m.LoginFormPageModule)
@@ -29,6 +26,15 @@ const routes: Routes = [
     path: 'stats',
     loadChildren: () => import('./stats/stats.module').then( m => m.StatsPageModule)
   },
+  {
+    path: 'comidas',
+    loadChildren: () => import('./comidas/comidas.module').then( m => m.ComidasPageModule)
+  },
+  {
+    path: 'tab',
+    loadChildren: () => import('./tab/tab.module').then( m => m.TabPageModule)
+  },
+
 
 ];
 

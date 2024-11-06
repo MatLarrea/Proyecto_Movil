@@ -26,7 +26,7 @@ export class LoginFormPage implements OnInit {
       
       this.alertControllerService.showAlert(result.message, '¡Bienvenido!');
       if(result.firsLoginStatus){
-        this.router.navigate(['/home'])
+        this.router.navigate(['/tab'])
       }else{
         this.router.navigate(['/stats'])
       }

@@ -22,7 +22,7 @@ export class SplashPage implements OnInit {
   async checkSession(){
     const user = await this.storageService.get('user');
     if(user){
-      this.router.navigate(['/home']);
+      this.router.navigate(['/tab']);
     }else{
       this.router.navigate(['/login-form']);
     }

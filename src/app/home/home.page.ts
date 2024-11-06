@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { FoodModalComponent } from '../food-modal/food-modal.component';
-import { SessionManager } from 'Managers/sessionManager';
+import { userLogoutUseCase } from '../use-cases/user-logout.user-case';
 import { StorageService } from '../service/Storage.service';
 import { addIcons } from 'ionicons';
 import { library, playCircle, radio, search } from 'ionicons/icons';
@@ -38,7 +38,7 @@ export class HomePage {
 
   
 
-  constructor(private router: Router, private route: ActivatedRoute, private modalCtrl: ModalController, private sessionManager: SessionManager, private storageService: StorageService) {
+  constructor(private router: Router, private route: ActivatedRoute, private modalCtrl: ModalController, private userLogout: userLogoutUseCase, private storageService: StorageService) {
     
       this.caloriasDiarias = this.calcularCaloriasDiarias();
       this.calcularCaloriasRestante();
@@ -53,6 +53,8 @@ export class HomePage {
     const user = await this.storageService.get('user');
     if (!user) {
       console.log('No se encontraron datos del usuario.');
+    }else{
+      this.loadUserData();
     }
   }
   
@@ -165,7 +167,7 @@ export class HomePage {
 
   async singOut() {
     await this.storageService.clear();
-    this.sessionManager.signOut();
+    this.userLogout.performLogout();
     this.router.navigate(['/splash']);
   }
 }

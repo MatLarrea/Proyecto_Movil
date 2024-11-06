@@ -34,7 +34,7 @@ export class userLoginUseCase {
                 const userRef = this.firestore.collection('Users').doc(uid);
                 const userSnapshot  = await firstValueFrom(userRef.get());
                 const userData = userSnapshot.data() as User;
-                console.log('UserData: ',userData.firstLoginStatus);
+                console.log('UserData: ',userData);
 
                 if (userData){
                     const displayName = userData.displayName || '';
@@ -54,6 +54,7 @@ export class userLoginUseCase {
                         genero: userData.genero,
                         firstLoginStatus: userData.firstLoginStatus
                     })
+                    console.log("Datos login storage: ", this.storageService.get('user'))
                 }
                 return {success: true, message: 'userdata', firsLoginStatus: userData.firstLoginStatus}
             }else {

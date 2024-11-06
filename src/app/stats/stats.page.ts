@@ -49,7 +49,7 @@ export class StatsPage {
         this.userUpdate.updateStats(userStats.nickname, userStats.altura, userStats.peso, userStats.edad, userStats.nivelActividad, userStats.meta, userStats.genero)
         
         console.log('User Stats', this.storageService.get('user'))
-        this.router.navigate(['/home'], {
+        this.router.navigate(['/tab'], {
         
       });
       }catch (error) {
