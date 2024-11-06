@@ -39,4 +39,6 @@ export class FoodService {
   deleteAlimento(id: string) {
     return this.alimentosCollection.doc(id).delete();
   }
+
+  
 }

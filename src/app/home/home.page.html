@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>Perfil de {{nickname}}</ion-title>
 
-    <ion-button  (click)="singOut()">Cerrar Sesión</ion-button>
+    <ion-button size="small" (click)="singOut()">Cerrar Sesión</ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -32,19 +32,24 @@
     </ion-card>
 
     <!-- Mañana -->
+     
+   
     <h2>Alimentos Consumidos Mañana</h2>
     <ion-list>
-      <ion-item *ngFor="let alimento of alimentosManana">
+      <ion-item *ngFor="let alimento of alimentosManana;let i = index">
         <ion-label>{{alimento.nombre}} ({{alimento.calorias}} kcal)</ion-label>
+        <ion-button color="danger" size="small" slot="end" (click)="eliminarAlimento('mañana', i)">Eliminar</ion-button>
       </ion-item>
     </ion-list>
     <ion-button expand="block" (click)="openFoodModal('mañana')">Añadir alimento Mañana</ion-button>
+    
 
     <!-- Tarde -->
     <h2>Alimentos Consumidos Tarde</h2>
     <ion-list>
-      <ion-item *ngFor="let alimento of alimentosTarde">
+      <ion-item *ngFor="let alimento of alimentosTarde;let i = index">
         <ion-label>{{alimento.nombre}} ({{alimento.calorias}} kcal)</ion-label>
+        <ion-button color="danger" size="small" slot="end" (click)="eliminarAlimento('tarde', i)">Eliminar</ion-button>
       </ion-item>
     </ion-list>
     <ion-button expand="block" (click)="openFoodModal('tarde')">Añadir alimento Tarde</ion-button>
@@ -52,8 +57,9 @@
     <!-- Noche -->
     <h2>Alimentos Consumidos Noche</h2>
     <ion-list>
-      <ion-item *ngFor="let alimento of alimentosNoche">
+      <ion-item *ngFor="let alimento of alimentosNoche;let i = index">
         <ion-label>{{alimento.nombre}} ({{alimento.calorias}} kcal)</ion-label>
+        <ion-button color="danger" size="small" slot="end" (click)="eliminarAlimento('noche', i)">Eliminar</ion-button>
       </ion-item>
     </ion-list>
     <ion-button expand="block" (click)="openFoodModal('noche')">Añadir alimento Noche</ion-button>

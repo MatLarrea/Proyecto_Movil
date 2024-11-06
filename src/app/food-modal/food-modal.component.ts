@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { FoodService } from '../service/food.service';
 
 interface Alimento {
+  id?: string;  // Añadimos 'id' para el manejo de actualización y eliminación
   nombre: string;
   calorias: number;
   proteinas: number;
@@ -36,6 +37,7 @@ export class FoodModalComponent {
   }
 
   loadAlimentos() {
+    // Carga los alimentos y asigna el UID a cada uno automáticamente
     this.foodService.getAlimentos().subscribe(alimentos => {
       this.alimentos = alimentos;
     });
@@ -51,22 +53,53 @@ export class FoodModalComponent {
     });
   }
 
-  toggleFormulario() {
-    this.mostrarFormulario = !this.mostrarFormulario;
+  toggleFormulario(abierto: boolean) {
+    this.mostrarFormulario = abierto;
   }
 
   crearAlimento() {
     if (this.nuevoAlimento.nombre.trim()) {
-      this.foodService.addAlimento(this.nuevoAlimento).then(() => {
-        console.log('Alimento agregado');
-        this.mostrarFormulario = false;  // Oculta el formulario después de agregar
-        this.nuevoAlimento = { nombre: '', calorias: 0, proteinas: 0, carbohidratos: 0, unidad: 0 }; // Limpia el formulario
-        this.loadAlimentos();  // Refresca la lista de alimentos
-      }).catch(error => {
-        console.error('Error al agregar alimento:', error);
-      });
+      if (this.nuevoAlimento.id) {
+        // Si el alimento tiene un ID, realiza una actualización
+        this.foodService.updateAlimento(this.nuevoAlimento.id, this.nuevoAlimento).then(() => {
+          console.log('Alimento actualizado');
+          this.resetFormulario();
+          this.loadAlimentos();
+        }).catch(error => {
+          console.error('Error al actualizar alimento:', error);
+        });
+      } else {
+        // Si no tiene ID, crea un nuevo alimento
+        this.foodService.addAlimento(this.nuevoAlimento).then(() => {
+          console.log('Alimento agregado');
+          this.resetFormulario();
+          this.loadAlimentos();
+        }).catch(error => {
+          console.error('Error al agregar alimento:', error);
+        });
+      }
     } else {
       console.warn('El nombre del alimento no puede estar vacío.');
     }
+  }
+
+  eliminarAlimento(id: string) {
+    this.foodService.deleteAlimento(id).then(() => {
+      console.log('Alimento eliminado');
+      this.loadAlimentos();
+    }).catch(error => {
+      console.error('Error al eliminar alimento:', error);
+    });
+  }
+
+  modificarAlimento(alimento: Alimento) {
+    // Carga los datos del alimento en el formulario para editarlos
+    this.nuevoAlimento = { ...alimento };
+    this.mostrarFormulario = true;
+  }
+
+  resetFormulario() {
+    this.mostrarFormulario = false;
+    this.nuevoAlimento = { nombre: '', calorias: 0, proteinas: 0, carbohidratos: 0, unidad: 0 };
   }
 }

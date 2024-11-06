@@ -14,38 +14,42 @@
         <p>Unidad: {{ alimento.unidad }}</p>
       </ion-label>
       <ion-checkbox slot="end" [(ngModel)]="alimento.selected"></ion-checkbox>
+      <ion-button slot="end" color="primary" (click)="modificarAlimento(alimento)">Modificar</ion-button>
+      <ion-button slot="end" color="danger" (click)="eliminarAlimento(alimento.id)">Eliminar</ion-button>
     </ion-item>
   </ion-list>
-
-  <ion-button expand="block" (click)="addFood()">Agregar Seleccionados</ion-button>
-  <ion-button expand="block" color="primary" (click)="toggleFormulario()">Agregar Nuevo Alimento</ion-button>
-
-  <!-- Formulario para agregar nuevo alimento -->
-  <div *ngIf="mostrarFormulario">
-    <ion-item>
-      <ion-label position="floating">Nombre</ion-label>
-      <ion-input [(ngModel)]="nuevoAlimento.nombre"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Calorías</ion-label>
-      <ion-input type="number" [(ngModel)]="nuevoAlimento.calorias"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Proteínas (g)</ion-label>
-      <ion-input type="number" [(ngModel)]="nuevoAlimento.proteinas"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Carbohidratos (g)</ion-label>
-      <ion-input type="number" [(ngModel)]="nuevoAlimento.carbohidratos"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Unidad</ion-label>
-      <ion-input type="number" [(ngModel)]="nuevoAlimento.unidad"></ion-input>
-    </ion-item>
-
-    <ion-footer>
-      <ion-button expand="block" color="danger" (click)="toggleFormulario()">Cancelar</ion-button>
-      <ion-button expand="block" color="success" (click)="crearAlimento()">Agregar</ion-button>
-    </ion-footer>
-  </div>
+  <ion-button  (click)="addFood()">Agregar Seleccionados</ion-button>
+  <ion-button (click)="toggleFormulario(true)">Agregar Alimento</ion-button>
+  <ion-modal [isOpen]="mostrarFormulario" (ionModalDidDismiss)="toggleFormulario(false)">
+    <ng-template>
+      <div style="padding: 20px;">
+        <h2>{{ nuevoAlimento.id ? 'Modificar' : 'Agregar' }} Alimento</h2>
+        <!-- Formulario para agregar o modificar el alimento -->
+        <ion-item>
+          <ion-label position="floating">Nombre</ion-label>
+          <ion-input [(ngModel)]="nuevoAlimento.nombre"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Calorías</ion-label>
+          <ion-input type="number" [(ngModel)]="nuevoAlimento.calorias"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Proteínas (g)</ion-label>
+          <ion-input type="number" [(ngModel)]="nuevoAlimento.proteinas"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Carbohidratos (g)</ion-label>
+          <ion-input type="number" [(ngModel)]="nuevoAlimento.carbohidratos"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Unidad</ion-label>
+          <ion-input type="number" [(ngModel)]="nuevoAlimento.unidad"></ion-input>
+        </ion-item>
+        <ion-button expand="block" (click)="crearAlimento()">
+          {{ nuevoAlimento.id ? 'Actualizar' : 'Agregar' }}
+        </ion-button>
+        <ion-button expand="block" color="medium" (click)="toggleFormulario(false)">Cancelar</ion-button>
+      </div>
+    </ng-template>
+  </ion-modal>
 </ion-content>

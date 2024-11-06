@@ -170,5 +170,23 @@ export class HomePage {
     this.userLogout.performLogout();
     this.router.navigate(['/splash']);
   }
+  eliminarAlimento(franja: string, index: number) {
+    let alimentoEliminado;
+  
+    // Eliminar el alimento del array y almacenar su referencia
+    if (franja === 'mañana') {
+      alimentoEliminado = this.alimentosManana.splice(index, 1)[0];
+    } else if (franja === 'tarde') {
+      alimentoEliminado = this.alimentosTarde.splice(index, 1)[0];
+    } else if (franja === 'noche') {
+      alimentoEliminado = this.alimentosNoche.splice(index, 1)[0];
+    }
+  
+    // Restar las calorías del alimento eliminado de la cuenta total
+    if (alimentoEliminado) {
+      this.caloriasConsumidas -= alimentoEliminado.calorias;
+      this.calcularCaloriasRestante();  // Recalcular calorías restantes
+    }
+  }
 }
 
