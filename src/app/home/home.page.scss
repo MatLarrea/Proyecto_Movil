@@ -30,12 +30,13 @@ ion-content {
   justify-content: center;
   align-items: center;
   --background: none;
-  background-image: url('/assets/bg2.jpg'); /* Imagen de fondo */
+  background-image: url('/assets/Bg.jpg'); /* Imagen de fondo */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   height: 100%;
   width: 100%;
+  text-align: center;
 }
 
 .avatar-container {
@@ -47,4 +48,17 @@ ion-content {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.profile-info{
+  text-align: start;
+}
+
+.ion-toolbar{
+  display: inline;
+  align-items: start;
+}
+
+.profile-info img{
+  border-radius: 50%;
 }

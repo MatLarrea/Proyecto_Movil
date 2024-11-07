@@ -1,8 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Perfil de {{nickname}}</ion-title>
-
-    <ion-button size="small" (click)="singOut()">Cerrar Sesión</ion-button>
+    <ion-button (click)="singOut()">
+      <ion-icon class='logout' slot="icon-only" name="log-out-outline"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -32,10 +33,10 @@
         <p><strong>Calorías restantes: {{caloriasRestantes}}</strong></p>
       </ion-card-content>
     </ion-card>
-
+  </div>  
     <!-- Mañana -->
      
-   
+    <h1>Comidas diarias</h1>
     <h2>Alimentos Consumidos Mañana</h2>
     <ion-list>
       <ion-item *ngFor="let alimento of alimentosManana;let i = index">
@@ -66,7 +67,7 @@
     </ion-list>
     <ion-button expand="block" (click)="openFoodModal('noche')">Añadir alimento Noche</ion-button>
     
-  </div>
+  
   
   
 </ion-content>

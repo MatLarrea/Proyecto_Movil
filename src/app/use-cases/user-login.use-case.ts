@@ -56,7 +56,7 @@ export class userLoginUseCase {
                     })
                     console.log("Datos login storage: ", this.storageService.get('user'))
                 }
-                return {success: true, message: 'userdata', firsLoginStatus: userData.firstLoginStatus}
+                return {success: true, message: 'Login exitoso!', firsLoginStatus: userData.firstLoginStatus}
             }else {
                 return { success: false, message: "Error de autentificación, usuario no encontrado",firsLoginStatus: false };
             }

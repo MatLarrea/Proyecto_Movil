@@ -4,13 +4,10 @@ import { ModalController } from '@ionic/angular';
 import { FoodModalComponent } from '../food-modal/food-modal.component';
 import { userLogoutUseCase } from '../use-cases/user-logout.user-case';
 import { StorageService } from '../service/Storage.service';
-import { addIcons } from 'ionicons';
-import { library, playCircle, radio, search } from 'ionicons/icons';
-import { user } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-
-
+import { CancelAlertService } from '../service/cancelAlert.service';
+import { userProfilePhotoUpdateUseCase } from '../use-cases/user-profileImageUpdate.use-case';
 
 
 interface Alimento {
@@ -46,7 +43,7 @@ export class HomePage {
 
   
 
-  constructor(private router: Router, private route: ActivatedRoute, private modalCtrl: ModalController, private userLogout: userLogoutUseCase, private storageService: StorageService,) {
+  constructor(private router: Router, private route: ActivatedRoute, private modalCtrl: ModalController, private userLogout: userLogoutUseCase, private storageService: StorageService, private cancelAlertService: CancelAlertService,private userProfilePhotoUpdate: userProfilePhotoUpdateUseCase) {
     
       this.caloriasDiarias = this.calcularCaloriasDiarias();
       this.calcularCaloriasRestante();
@@ -170,14 +167,10 @@ export class HomePage {
     this.nivelActividad = userData['nivelActividad'];
     this.meta = userData['meta'];
     this.genero = userData['genero'];
-    
+    this.avatarUrl = userData['photoUrl']
   }
 
-  async singOut() {
-    await this.storageService.clear();
-    this.userLogout.performLogout();
-    this.router.navigate(['/splash']);
-  }
+  
   eliminarAlimento(franja: string, index: number) {
     let alimentoEliminado;
   
@@ -211,9 +204,28 @@ export class HomePage {
 
       // Obtiene la URL de la imagen tomada
       this.avatarUrl = image.webPath;
+      this.userProfilePhotoUpdate.updateProfileImage(this.avatarUrl);
+      console.log("Datos actualizado photoUrl: ", this.storageService.get('user')); 
     } catch (error) {
       console.error("Error al tomar la foto", error);
     }
+  }
+
+
+  //Cierre de sesión
+  async singOut() {
+
+
+    this.cancelAlertService.showAlert(
+      '       Cerrar Sesión',
+      '¿Seguro quiere cerrar sesión?',
+      async () => {
+        this.userLogout.performLogout();
+        this.router.navigate(['/splash']);
+      },
+      () => {}
+    )
+   
   }
 
 }

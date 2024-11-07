@@ -1,32 +1,43 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+   
     <ion-title>Comidas</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="background">
-  
-  <ion-card class="card-list">
-    <ion-card-header>
-      <ion-card-title>Lista de Comidas</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-list>
+   <!-- Contenedor para centrar el logo -->
+    <div class="logo-container">
+      <img src="assets/meals.webp" alt="Logo" class="logo">
+    </div>
+  <!-- Contenedor principal con flexbox para asegurar que el botón quede abajo -->
+  <div class="content-container">
+    <!-- Tarjeta de la lista de comidas -->
+    <ion-card class="card-list">
+      <ion-card-header>
+        <ion-card-title>Lista de Comidas</ion-card-title>
         
-        <ion-item *ngFor="let receta of recetas" (click)="abrirModalDetalle(receta)" lines="none">
-          <ion-label class="recipe-name">{{ receta.nombre }}</ion-label>
-          <ion-button fill="clear" color="danger" (click)="eliminarReceta(receta)" slot="end">
-            <ion-icon name="trash-outline"></ion-icon>
-          </ion-button>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+      </ion-card-header>
+      <ion-card-content>
+        <!-- Contenedor de la lista con scroll -->
+        <div class="list-container">
+          <ion-list>
+            <ion-item *ngFor="let receta of recetas" (click)="abrirModalDetalle(receta)" lines="none">
+              <ion-label class="recipe-name">{{ receta.nombre }}</ion-label>
+              <ion-button fill="clear" color="danger" (click)="eliminarReceta(receta)" slot="end">
+                <ion-icon name="trash-outline"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-card-content>
+    </ion-card>
 
-  
+      <!-- El botón fijo al fondo de la pantalla -->
   <ion-button expand="block" class="addreceta" (click)="openModal()">Agregar Comida</ion-button>
-  
-  
+  </div>
+
+  <!-- Modal para agregar receta -->
   <ion-modal [isOpen]="isModalOpen" (ionModalDidDismiss)="closeModal()">
     <ng-template>
       <ion-header>
@@ -39,39 +50,34 @@
       </ion-header>
       <ion-content>
         <form (ngSubmit)="crearReceta()">
-          
           <ion-item>
             <ion-label position="floating">Nombre de la receta</ion-label>
             <ion-input type="text" [(ngModel)]="receta.nombre" name="nombre" required></ion-input>
           </ion-item>
 
-          
           <ion-item>
             <ion-label position="floating">Ingredientes</ion-label>
             <ion-input type="text" [(ngModel)]="receta.ingredientes" name="ingredientes" required></ion-input>
           </ion-item>
 
-          
           <ion-item>
             <ion-label position="floating">Modo de Preparación</ion-label>
             <ion-textarea [(ngModel)]="receta.modoPreparacion" name="modoPreparacion" required></ion-textarea>
           </ion-item>
 
-          
           <ion-item>
-            
+            <ion-label position="floating">Foto del Resultado</ion-label>
             <ion-button (click)="tomarFoto()">Tomar Foto</ion-button>
             <img *ngIf="receta.foto" [src]="receta.foto" alt="Foto de la receta" />
           </ion-item>
 
-          
           <ion-button expand="full" type="submit">Crear Receta</ion-button>
         </form>
       </ion-content>
     </ng-template>
   </ion-modal>
 
-  
+  <!-- Modal de detalle de la receta -->
   <ion-modal [isOpen]="isModalDetalleOpen" (ionModalDidDismiss)="closeModalDetalle()">
     <ng-template>
       <ion-header>
@@ -92,7 +98,7 @@
           <p>{{ recetaSeleccionada?.modoPreparacion }}</p>
         </ion-item>
         <ion-item *ngIf="recetaSeleccionada?.foto">
-          
+          <ion-label>Foto:</ion-label>
           <img [src]="recetaSeleccionada?.foto" alt="Foto de la receta" />
         </ion-item>
       </ion-content>
