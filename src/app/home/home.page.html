@@ -9,8 +9,10 @@
 <ion-content class="ion-padding">
   <div class="profile-info">
     <ion-item>
-      <ion-avatar slot="start">
-        <img src="assets/avatar.png">
+      <ion-avatar slot="start"class="avatar-container">
+        <ion-button (click)="tomarFoto()" fill="clear">
+          <img [src]="avatarUrl || 'assets/avatar.png'" />
+        </ion-button>
       </ion-avatar>
       <ion-label>
         <h2>{{nickname}}</h2>

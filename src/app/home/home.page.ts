@@ -8,6 +8,10 @@ import { addIcons } from 'ionicons';
 import { library, playCircle, radio, search } from 'ionicons/icons';
 import { user } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+
+
+
 
 interface Alimento {
   nombre: string;
@@ -30,6 +34,10 @@ export class HomePage {
   caloriasDiarias: number = 0;
   caloriasConsumidas: number = 0; // Acumulador de calorías
   caloriasRestantes: number = 0; // Propiedad para calorías restantes
+  avatar: string = 'assets/avatar.png'; // Imagen por defecto
+  avatarUrl: string = '';
+
+ 
 
   // Listas de alimentos por franja horaria
   alimentosManana: Alimento[] = [];
@@ -38,7 +46,7 @@ export class HomePage {
 
   
 
-  constructor(private router: Router, private route: ActivatedRoute, private modalCtrl: ModalController, private userLogout: userLogoutUseCase, private storageService: StorageService) {
+  constructor(private router: Router, private route: ActivatedRoute, private modalCtrl: ModalController, private userLogout: userLogoutUseCase, private storageService: StorageService,) {
     
       this.caloriasDiarias = this.calcularCaloriasDiarias();
       this.calcularCaloriasRestante();
@@ -188,5 +196,25 @@ export class HomePage {
       this.calcularCaloriasRestante();  // Recalcular calorías restantes
     }
   }
+  
+
+
+
+  async tomarFoto() {
+    try {
+      // Abre la cámara y toma una foto
+      const image = await Camera.getPhoto({
+        resultType: CameraResultType.Uri,
+        source: CameraSource.Camera, // Especifica que la fuente es la cámara
+        quality: 200 // Calidad de la imagen (puedes ajustar este valor)
+      });
+
+      // Obtiene la URL de la imagen tomada
+      this.avatarUrl = image.webPath;
+    } catch (error) {
+      console.error("Error al tomar la foto", error);
+    }
+  }
+
 }
 
