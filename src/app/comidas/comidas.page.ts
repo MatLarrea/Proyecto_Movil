@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { StorageService } from '../service/Storage.service';
+import { GeolocationService } from '../service/geolocation-service.service';
 
 @Component({
   selector: 'app-comidas',
@@ -20,10 +21,11 @@ export class ComidasPage implements OnInit {
   isModalOpen: boolean = false;
   isModalDetalleOpen: boolean = false;
 
-  constructor(private storageService: StorageService) {}
+  constructor(private storageService: StorageService, private geolocationService: GeolocationService) {}
 
   ngOnInit() {
     this.cargarRecetas();
+    console.log('Localizacion: ', this.geolocationService.getCurrentLocation())
   }
 
   // Cargar las recetas desde el Storage

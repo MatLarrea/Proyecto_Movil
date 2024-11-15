@@ -31,7 +31,7 @@ export class HomePage {
   caloriasDiarias: number = 0;
   caloriasConsumidas: number = 0; // Acumulador de calorías
   caloriasRestantes: number = 0; // Propiedad para calorías restantes
-  avatar: string = 'assets/avatar.png'; // Imagen por defecto
+  //avatar: string = 'assets/avatar.png'; // Imagen por defecto
   avatarUrl: string = '';
 
  
