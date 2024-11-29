@@ -21,7 +21,7 @@ export class userLogoutUseCase{
 
             //Limpiar datos de ionic storage
             await this.storageService.clear();
-            
+            console.log('Logout: ' + this.storageService.get('user'))
             return {success: true, message: "Sesión finalizada"}
         }catch(error: any){
             let ErrorMessage: "Error al cerrar sesión"

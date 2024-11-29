@@ -5,15 +5,16 @@
       <ion-icon class='logout' slot="icon-only" name="log-out-outline"></ion-icon>
     </ion-button>
   </ion-toolbar>
+
+  
 </ion-header>
 
 <ion-content class="ion-padding">
   <div class="profile-info">
-    <ion-item>
+    
+    <ion-item class = "profile">
       <ion-avatar slot="start"class="avatar-container">
-        <ion-button (click)="tomarFoto()" fill="clear">
-          <img [src]="avatarUrl || 'assets/avatar.png'" />
-        </ion-button>
+          <img (click)="onProfilePhotoPressed()" alt="profile-photo" [src]="avatarUrl" />
       </ion-avatar>
       <ion-label>
         <h2>{{nickname}}</h2>

@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef  } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { FoodModalComponent } from '../food-modal/food-modal.component';
 import { userLogoutUseCase } from '../use-cases/user-logout.user-case';
 import { StorageService } from '../service/Storage.service';
 import { Router } from '@angular/router';
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { CancelAlertService } from '../service/cancelAlert.service';
-import { userProfilePhotoUpdateUseCase } from '../use-cases/user-profileImageUpdate.use-case';
+import { ImageService } from '../service/image.service';
+import { ActionSheetController } from '@ionic/angular';
 
 
 interface Alimento {
@@ -31,7 +31,7 @@ export class HomePage {
   caloriasDiarias: number = 0;
   caloriasConsumidas: number = 0; // Acumulador de calorías
   caloriasRestantes: number = 0; // Propiedad para calorías restantes
-  avatar: string = 'assets/avatar.png'; // Imagen por defecto
+  avatar: string = 'assets/avatarDefault.png'; // Imagen por defecto
   avatarUrl: string = '';
 
  
@@ -41,26 +41,25 @@ export class HomePage {
   alimentosTarde: Alimento[] = [];
   alimentosNoche: Alimento[] = [];
 
+
   
 
-  constructor(private router: Router, private route: ActivatedRoute, private modalCtrl: ModalController, private userLogout: userLogoutUseCase, private storageService: StorageService, private cancelAlertService: CancelAlertService,private userProfilePhotoUpdate: userProfilePhotoUpdateUseCase) {
+  constructor(private router: Router, private route: ActivatedRoute, private modalCtrl: ModalController, private userLogout: userLogoutUseCase, private storageService: StorageService, private cancelAlertService: CancelAlertService, private cdr: ChangeDetectorRef, private imageService: ImageService, private actionSheetController: ActionSheetController) {
     
       this.caloriasDiarias = this.calcularCaloriasDiarias();
       this.calcularCaloriasRestante();
     
   }
 
-  ngOnInit() {
-    this.loadUserData();
+  async ngOnInit() {
+    console.log('Storage home: ', this.storageService.get('user'));
+   
+    await this.loadUserData();
   }
 
-  async ionViewDidEnter() {
-    const user = await this.storageService.get('user');
-    if (!user) {
-      console.log('No se encontraron datos del usuario.');
-    }else{
-      this.loadUserData();
-    }
+  ionViewWillEnter() {
+    this.loadUserData();
+    console.log('IonViewDidenter', this.storageService.get('user'))
   }
   
   calcularCaloriasDiarias(): number {
@@ -157,8 +156,9 @@ export class HomePage {
   }
 
   async loadUserData() {
-
+    
     const userData = await this.storageService.get('user');
+
     console.log("datos usuario: ", userData);
     this.nickname = userData['nickname'];
     this.altura = userData['altura'];
@@ -167,7 +167,7 @@ export class HomePage {
     this.nivelActividad = userData['nivelActividad'];
     this.meta = userData['meta'];
     this.genero = userData['genero'];
-    this.avatarUrl = userData['photoUrl']
+    this.avatarUrl = userData['photoURL']
   }
 
   
@@ -190,28 +190,6 @@ export class HomePage {
     }
   }
   
-
-
-
-  async tomarFoto() {
-    try {
-      // Abre la cámara y toma una foto
-      const image = await Camera.getPhoto({
-        resultType: CameraResultType.Uri,
-        source: CameraSource.Camera, // Especifica que la fuente es la cámara
-        quality: 200 // Calidad de la imagen (puedes ajustar este valor)
-      });
-
-      // Obtiene la URL de la imagen tomada
-      this.avatarUrl = image.webPath;
-      this.userProfilePhotoUpdate.updateProfileImage(this.avatarUrl);
-      console.log("Datos actualizado photoUrl: ", this.storageService.get('user')); 
-    } catch (error) {
-      console.error("Error al tomar la foto", error);
-    }
-  }
-
-
   //Cierre de sesión
   async singOut() {
 
@@ -228,5 +206,53 @@ export class HomePage {
    
   }
 
+  async onProfilePhotoPressed() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Selecciona una opción',
+      buttons: [
+        {
+          text: 'Cámara',
+          icon: 'camera',
+          handler: async () => {
+            const uploadResult = await this.imageService.getImageFromCamera();
+            this.handleImageUploadResult(uploadResult);
+          }
+        },
+        {
+          text: 'Imágenes',
+          icon: 'image',
+          handler: async () => {
+            const uploadResult = await this.imageService.getImageFromGallery();
+            this.handleImageUploadResult(uploadResult);
+          },
+        },
+        {
+          text: 'Cancelar',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => { }
+        }
+      ]
+    });
+    await actionSheet.present();
+  }
+
+  private handleImageUploadResult(uploadResult: { success: boolean, message: string, imageUrl?: string }) {
+    if (uploadResult.success) {
+      this.cancelAlertService.showAlert(
+        'Imagen Actualizada',
+        'Tu imagen de perfil ha sido actualizada con éxito.',
+        () => {
+          this.avatarUrl = uploadResult.imageUrl || 'assets/default-avatar.png';
+        }
+      );
+    } else {
+      this.cancelAlertService.showAlert(
+        'Error',
+        uploadResult.message,
+        () => { }
+      );
+    }
+  }
 }
 

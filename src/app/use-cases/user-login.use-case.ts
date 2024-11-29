@@ -39,8 +39,8 @@ export class userLoginUseCase {
                 if (userData){
                     const displayName = userData.displayName || '';
                     const photoURL = userData.photoURL || '';
-
-                    this.storageService.set('user', {
+                    
+                    await this.storageService.set('user', {
                         uid: uid,
                         email: userData.email,
                         photoURL: photoURL,

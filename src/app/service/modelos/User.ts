@@ -2,7 +2,7 @@ export interface User {
     uid: number,
     displayName: string,
     email: string,
-    photoURL: StreamPipeOptions,
+    photoURL: string,
     nickname: string,
     altura: number,
     peso: number,
