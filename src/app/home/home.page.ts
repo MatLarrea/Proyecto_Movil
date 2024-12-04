@@ -31,7 +31,6 @@ export class HomePage {
   caloriasDiarias: number = 0;
   caloriasConsumidas: number = 0; // Acumulador de calorías
   caloriasRestantes: number = 0; // Propiedad para calorías restantes
-  avatar: string = 'assets/avatarDefault.png'; // Imagen por defecto
   avatarUrl: string = '';
 
  
@@ -51,13 +50,7 @@ export class HomePage {
     
   }
 
-  async ngOnInit() {
-    console.log('Storage home: ', this.storageService.get('user'));
-   
-    await this.loadUserData();
-  }
-
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
     this.loadUserData();
     console.log('IonViewDidenter', this.storageService.get('user'))
   }
