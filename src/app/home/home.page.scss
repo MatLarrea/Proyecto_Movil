@@ -25,3 +25,48 @@
 #container a {
   text-decoration: none;
 }
+ion-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  --background: none;
+  background-image: url('/assets/Bg.jpg'); /* Imagen de fondo */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+
+.avatar-container {
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  overflow: hidden; 
+  width: 70px; 
+  height: 70px;
+  border-radius: 50%
+}
+
+.profile {
+  --inner-padding-start: 20px; 
+  --inner-padding-end: 20px; 
+  --inner-padding-top: 20px; 
+  --inner-padding-bottom: 20px;
+}
+
+.avatar-container img {
+  width: 100%;
+  height: 100%;
+}
+
+.profile-info{
+  text-align: start;
+}
+
+.ion-toolbar{
+  display: inline;
+  align-items: start;
+}
+

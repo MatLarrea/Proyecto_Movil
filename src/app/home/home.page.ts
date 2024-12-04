@@ -1,7 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef  } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { FoodModalComponent } from '../food-modal/food-modal.component';
+import { userLogoutUseCase } from '../use-cases/user-logout.user-case';
+import { StorageService } from '../service/Storage.service';
+import { Router } from '@angular/router';
+import { CancelAlertService } from '../service/cancelAlert.service';
+import { ImageService } from '../service/image.service';
+import { ActionSheetController } from '@ionic/angular';
+
 
 interface Alimento {
   nombre: string;
@@ -24,28 +31,30 @@ export class HomePage {
   caloriasDiarias: number = 0;
   caloriasConsumidas: number = 0; // Acumulador de calorías
   caloriasRestantes: number = 0; // Propiedad para calorías restantes
+  avatarUrl: string = '';
+
+ 
 
   // Listas de alimentos por franja horaria
   alimentosManana: Alimento[] = [];
   alimentosTarde: Alimento[] = [];
   alimentosNoche: Alimento[] = [];
 
-  constructor(private route: ActivatedRoute, private modalCtrl: ModalController) {
-    this.route.queryParams.subscribe(params => {
-      if (params) {
-        this.nickname = params['nickname'] || '';
-        this.altura = params['altura'] || 0;
-        this.peso = params['peso'] || 0;
-        this.edad = params['edad'] || 0;
-        this.nivelActividad = params['nivelActividad'] || '';
-        this.meta = params['meta'] || '';
-        this.genero = params['genero'] || '';
-        this.caloriasDiarias = this.calcularCaloriasDiarias();
-        this.calcularCaloriasRestante();
-      }
-    });
+
+  
+
+  constructor(private router: Router, private route: ActivatedRoute, private modalCtrl: ModalController, private userLogout: userLogoutUseCase, private storageService: StorageService, private cancelAlertService: CancelAlertService, private cdr: ChangeDetectorRef, private imageService: ImageService, private actionSheetController: ActionSheetController) {
+    
+      this.caloriasDiarias = this.calcularCaloriasDiarias();
+      this.calcularCaloriasRestante();
+    
   }
 
+  async ionViewWillEnter() {
+    this.loadUserData();
+    console.log('IonViewDidenter', this.storageService.get('user'))
+  }
+  
   calcularCaloriasDiarias(): number {
     let metabolismoBasal: number;
   
@@ -92,6 +101,9 @@ export class HomePage {
   async openFoodModal(franja: 'mañana' | 'tarde' | 'noche') {
     const modal = await this.modalCtrl.create({
       component: FoodModalComponent,
+          
+      
+      
     });
 
     modal.onDidDismiss().then((data) => {
@@ -135,4 +147,105 @@ export class HomePage {
   calcularCaloriasRestante() {
     this.caloriasRestantes = Math.round(this.caloriasDiarias - this.caloriasConsumidas); 
   }
+
+  async loadUserData() {
+    
+    const userData = await this.storageService.get('user');
+
+    console.log("datos usuario: ", userData);
+    this.nickname = userData['nickname'];
+    this.altura = userData['altura'];
+    this.peso = userData['peso'];
+    this.edad = userData['edad'];
+    this.nivelActividad = userData['nivelActividad'];
+    this.meta = userData['meta'];
+    this.genero = userData['genero'];
+    this.avatarUrl = userData['photoURL']
+  }
+
+  
+  eliminarAlimento(franja: string, index: number) {
+    let alimentoEliminado;
+  
+    // Eliminar el alimento del array y almacenar su referencia
+    if (franja === 'mañana') {
+      alimentoEliminado = this.alimentosManana.splice(index, 1)[0];
+    } else if (franja === 'tarde') {
+      alimentoEliminado = this.alimentosTarde.splice(index, 1)[0];
+    } else if (franja === 'noche') {
+      alimentoEliminado = this.alimentosNoche.splice(index, 1)[0];
+    }
+  
+    // Restar las calorías del alimento eliminado de la cuenta total
+    if (alimentoEliminado) {
+      this.caloriasConsumidas -= alimentoEliminado.calorias;
+      this.calcularCaloriasRestante();  // Recalcular calorías restantes
+    }
+  }
+  
+  //Cierre de sesión
+  async singOut() {
+
+
+    this.cancelAlertService.showAlert(
+      '       Cerrar Sesión',
+      '¿Seguro quiere cerrar sesión?',
+      async () => {
+        this.userLogout.performLogout();
+        this.router.navigate(['/splash']);
+      },
+      () => {}
+    )
+   
+  }
+
+  async onProfilePhotoPressed() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Selecciona una opción',
+      buttons: [
+        {
+          text: 'Cámara',
+          icon: 'camera',
+          handler: async () => {
+            const uploadResult = await this.imageService.getImageFromCamera();
+            this.handleImageUploadResult(uploadResult);
+          }
+        },
+        {
+          text: 'Imágenes',
+          icon: 'image',
+          handler: async () => {
+            const uploadResult = await this.imageService.getImageFromGallery();
+            this.handleImageUploadResult(uploadResult);
+          },
+        },
+        {
+          text: 'Cancelar',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => { }
+        }
+      ]
+    });
+    await actionSheet.present();
+  }
+
+  private handleImageUploadResult(uploadResult: { success: boolean, message: string, imageUrl?: string }) {
+    if (uploadResult.success) {
+      this.cancelAlertService.showAlert(
+        'Imagen Actualizada',
+        'Tu imagen de perfil ha sido actualizada con éxito.',
+        () => {
+          this.avatarUrl = uploadResult.imageUrl || 'assets/default-avatar.png';
+        }
+      );
+    } else {
+      this.cancelAlertService.showAlert(
+        'Error',
+        uploadResult.message,
+        () => { }
+      );
+    }
+  }
 }
+

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SessionManager } from 'Managers/sessionManager';
+import { AlertControllerService } from '../service/AlertController.service';
+import { userLoginUseCase } from '../use-cases/user-login.use-case';
+import { StorageService } from '../service/Storage.service';
 
 @Component({
   selector: 'app-login-form',
@@ -9,26 +11,38 @@ import { SessionManager } from 'Managers/sessionManager';
 })
 export class LoginFormPage implements OnInit {
 
-  constructor(private router: Router, private sessionManager: SessionManager){ }
-  
-  user: string = '';
+  email: string = '';
   password: string = '';
-    
-  ngOnInit() {
+
+  constructor(private router: Router, private alertControllerService: AlertControllerService, private userLogin: userLoginUseCase,private storageService: StorageService) { } 
+
+  ngOnInit() {}
+
+  async onLoginButtonPressed() {
+
+    const result = await this.userLogin.performeLogin(this.email, this.password);
+        
+    if(result.success){
+      
+      this.alertControllerService.showAlert(result.message, '¡Bienvenido!');
+      if(result.firsLoginStatus){
+        this.router.navigate(['/tab'])
+      }else{
+        this.router.navigate(['/stats'])
+      }
+ 
+    }else{
+      
+      this.alertControllerService.showAlert(result.message, '¡Error!')
+    }     
+        
+
+        
+  
 
   }
-
-  onLoginButtonPressed() {
-    if(this.sessionManager.performLogin(this.user, this.password)) {
-      this.router.navigate(['/stats']);
-    } else {
-      this.user=''
-      this.password=''
-      alert('Las credenciales ingresadas son inválidas.')
-    }
-  }
-
+  // Método para redirigir al registro
   onRegisterButtonPressed() {
-    this.router.navigate(['/register'])
+    this.router.navigate(['/register']);
   }
 }

@@ -1,0 +1,26 @@
+.modal-content {
+    --padding-bottom: 56px; 
+    --height: 80%;  
+  --width: 80%; 
+  background-color: white; 
+    padding: 20px;
+    border-radius: 10px; 
+  }
+  
+  ion-content {
+    --padding-bottom: 56px; 
+    height: 80%; 
+    overflow-y: auto; 
+  }
+  
+  ion-footer {
+    position: relative; 
+    height: 56px;
+    background-color: white;
+    z-index: 10;
+  }
+  ion-modal {
+    --backdrop-opacity: 0.5; 
+  }
+  
+  
