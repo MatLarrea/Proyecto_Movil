@@ -105,4 +105,39 @@ export class ComidasPage implements OnInit {
     await this.storageService.set('recetas', this.recetas);
     
   }
+
+
+
+  isModalModificarOpen: boolean = false; // Controla la visibilidad del modal de modificar
+  recetaEnEdicion: any = null;          // Receta seleccionada para modificar
+  // Abrir el modal para modificar receta
+abrirModalModificar(receta: any) {
+  this.recetaEnEdicion = { ...receta }; // Crear una copia para editar
+  this.isModalModificarOpen = true;
+}
+
+// Cerrar el modal de modificar receta
+cerrarModalModificar() {
+  this.isModalModificarOpen = false;
+  this.recetaEnEdicion = null;
+}
+
+// Guardar los cambios en la receta modificada
+async guardarRecetaModificada() {
+  try {
+    const index = this.recetas.findIndex(r => r.nombre === this.recetaEnEdicion.nombre);
+
+    if (index !== -1) {
+      this.recetas[index] = this.recetaEnEdicion; // Actualizar la receta en la lista
+      await this.storageService.set('recetas', this.recetas); // Guardar en el almacenamiento
+    }
+
+    console.log('Receta modificada con éxito');
+    this.cerrarModalModificar(); // Cerrar el modal
+  } catch (error) {
+    console.error('Error al modificar la receta:', error);
+  }
+}
+
+
 }
