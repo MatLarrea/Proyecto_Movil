@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { CancelAlertService } from '../service/cancelAlert.service';
 import { ImageService } from '../service/image.service';
 import { ActionSheetController } from '@ionic/angular';
+import { GeolocationService } from '../service/geolocation-service.service';
 
 
 interface Alimento {
@@ -32,6 +33,9 @@ export class HomePage {
   caloriasConsumidas: number = 0; // Acumulador de calorías
   caloriasRestantes: number = 0; // Propiedad para calorías restantes
   avatarUrl: string = '';
+  
+  address: string | null = null;
+  location: string | null = null;
 
  
 
@@ -43,7 +47,7 @@ export class HomePage {
 
   
 
-  constructor(private router: Router, private route: ActivatedRoute, private modalCtrl: ModalController, private userLogout: userLogoutUseCase, private storageService: StorageService, private cancelAlertService: CancelAlertService, private cdr: ChangeDetectorRef, private imageService: ImageService, private actionSheetController: ActionSheetController) {
+  constructor(private router: Router, private route: ActivatedRoute, private modalCtrl: ModalController, private userLogout: userLogoutUseCase, private storageService: StorageService, private cancelAlertService: CancelAlertService, private cdr: ChangeDetectorRef, private imageService: ImageService, private actionSheetController: ActionSheetController,private geolocationService: GeolocationService) {
     
       this.caloriasDiarias = this.calcularCaloriasDiarias();
       this.calcularCaloriasRestante();
@@ -245,6 +249,20 @@ export class HomePage {
         uploadResult.message,
         () => { }
       );
+    }
+  }
+  async ngOnInit() {
+    try {
+      // Obtener ubicación actual
+      const coords = await this.geolocationService.getCurrentLocation();
+
+      // Traducir coordenadas a ciudad/país
+      this.location = await this.geolocationService.reverseGeocode(coords.latitude, coords.longitude);
+
+      console.log('Ubicación actual:', this.location);
+    } catch (error) {
+      console.error('Error al obtener la ubicación o traducir:', error);
+      this.location = 'Ubicación no disponible';
     }
   }
 }

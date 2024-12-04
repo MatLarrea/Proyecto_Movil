@@ -1,78 +1,82 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Perfil de {{nickname}}</ion-title>
+    <ion-title>Perfil de {{ nickname }}</ion-title>
     <ion-button (click)="singOut()">
       <ion-icon class='logout' slot="icon-only" name="log-out-outline"></ion-icon>
     </ion-button>
   </ion-toolbar>
-
-  
 </ion-header>
 
 <ion-content class="ion-padding">
   <div class="profile-info">
-    
-    <ion-item class = "profile">
-      <ion-avatar slot="start"class="avatar-container">
-          <img (click)="onProfilePhotoPressed()" alt="profile-photo" [src]="avatarUrl" />
+
+    <!-- Información del perfil -->
+    <ion-item class="profile">
+      <ion-avatar slot="start" class="avatar-container">
+        <img (click)="onProfilePhotoPressed()" alt="profile-photo" [src]="avatarUrl" />
       </ion-avatar>
       <ion-label>
-        <h2>{{nickname}}</h2>
-        <p>Meta: {{meta}}</p>
+        <h2>{{ nickname }}</h2>
+        <p>Meta: {{ meta }}</p>
+
+        <!-- Sección de ubicación -->
+        
+        <div *ngIf="location">
+          <h2>Ubicación:</h2>
+          <p>{{ location }}</p>
+        </div>
+        <div *ngIf="!location">
+          <p>Cargando ubicación...</p>
+        </div>
       </ion-label>
     </ion-item>
 
+    <!-- Información adicional del usuario -->
     <ion-card>
       <ion-card-content>
-        <p>Peso inicial: {{peso}}kg</p>
-        <p>Altura: {{altura}}cm</p>
-        <p>Edad: {{edad}} años</p>
-        <p>Nivel de actividad: {{nivelActividad}}</p>
-        <p>Genero: {{genero}}</p>
-        <p>Calorías diarias: {{caloriasDiarias}}</p>
-        <p><strong>Calorías consumidas: {{caloriasConsumidas}}</strong></p>
-        <p><strong>Calorías restantes: {{caloriasRestantes}}</strong></p>
+        <p>Peso inicial: {{ peso }}kg</p>
+        <p>Altura: {{ altura }}cm</p>
+        <p>Edad: {{ edad }} años</p>
+        <p>Nivel de actividad: {{ nivelActividad }}</p>
+        <p>Género: {{ genero }}</p>
+        <p>Calorías diarias: {{ caloriasDiarias }}</p>
+        <p><strong>Calorías consumidas: {{ caloriasConsumidas }}</strong></p>
+        <p><strong>Calorías restantes: {{ caloriasRestantes }}</strong></p>
       </ion-card-content>
     </ion-card>
-  </div>  
-    <!-- Mañana -->
-     
-    <h1>Comidas diarias</h1>
-    <h2>Alimentos Consumidos Mañana</h2>
-    <ion-list>
-      <ion-item *ngFor="let alimento of alimentosManana;let i = index">
-        <ion-label>{{alimento.nombre}} ({{alimento.calorias}} kcal)</ion-label>
-        <ion-button color="danger" size="small" slot="end" (click)="eliminarAlimento('mañana', i)">Eliminar</ion-button>
-      </ion-item>
-    </ion-list>
-    <ion-button expand="block" (click)="openFoodModal('mañana')">Añadir alimento Mañana</ion-button>
-    
+  </div>
 
-    <!-- Tarde -->
-    <h2>Alimentos Consumidos Tarde</h2>
-    <ion-list>
-      <ion-item *ngFor="let alimento of alimentosTarde;let i = index">
-        <ion-label>{{alimento.nombre}} ({{alimento.calorias}} kcal)</ion-label>
-        <ion-button color="danger" size="small" slot="end" (click)="eliminarAlimento('tarde', i)">Eliminar</ion-button>
-      </ion-item>
-    </ion-list>
-    <ion-button expand="block" (click)="openFoodModal('tarde')">Añadir alimento Tarde</ion-button>
+  <!-- Comidas diarias -->
+  <h1>Comidas diarias</h1>
+  <!-- Mañana -->
+  <h2>Alimentos Consumidos Mañana</h2>
+  <ion-list>
+    <ion-item *ngFor="let alimento of alimentosManana; let i = index">
+      <ion-label>{{ alimento.nombre }} ({{ alimento.calorias }} kcal)</ion-label>
+      <ion-button color="danger" size="small" slot="end" (click)="eliminarAlimento('mañana', i)">Eliminar</ion-button>
+    </ion-item>
+  </ion-list>
+  <ion-button expand="block" (click)="openFoodModal('mañana')">Añadir alimento Mañana</ion-button>
 
-    <!-- Noche -->
-    <h2>Alimentos Consumidos Noche</h2>
-    <ion-list>
-      <ion-item *ngFor="let alimento of alimentosNoche;let i = index">
-        <ion-label>{{alimento.nombre}} ({{alimento.calorias}} kcal)</ion-label>
-        <ion-button color="danger" size="small" slot="end" (click)="eliminarAlimento('noche', i)">Eliminar</ion-button>
-      </ion-item>
-    </ion-list>
-    <ion-button expand="block" (click)="openFoodModal('noche')">Añadir alimento Noche</ion-button>
-    
-  
-  
-  
+  <!-- Tarde -->
+  <h2>Alimentos Consumidos Tarde</h2>
+  <ion-list>
+    <ion-item *ngFor="let alimento of alimentosTarde; let i = index">
+      <ion-label>{{ alimento.nombre }} ({{ alimento.calorias }} kcal)</ion-label>
+      <ion-button color="danger" size="small" slot="end" (click)="eliminarAlimento('tarde', i)">Eliminar</ion-button>
+    </ion-item>
+  </ion-list>
+  <ion-button expand="block" (click)="openFoodModal('tarde')">Añadir alimento Tarde</ion-button>
+
+  <!-- Noche -->
+  <h2>Alimentos Consumidos Noche</h2>
+  <ion-list>
+    <ion-item *ngFor="let alimento of alimentosNoche; let i = index">
+      <ion-label>{{ alimento.nombre }} ({{ alimento.calorias }} kcal)</ion-label>
+      <ion-button color="danger" size="small" slot="end" (click)="eliminarAlimento('noche', i)">Eliminar</ion-button>
+    </ion-item>
+  </ion-list>
+  <ion-button expand="block" (click)="openFoodModal('noche')">Añadir alimento Noche</ion-button>
 </ion-content>
 
-<ion-footer>
- 
-</ion-footer>
+<ion-footer></ion-footer>

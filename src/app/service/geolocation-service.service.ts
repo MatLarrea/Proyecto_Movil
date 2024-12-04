@@ -20,4 +20,20 @@ export class GeolocationService {
         
     }
   }
+  async reverseGeocode(latitude: number, longitude: number): Promise<string> {
+    try {
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10&addressdetails=1`
+      );
+      const data = await response.json();
+
+      const city = data.address?.city || data.address?.town || data.address?.village || 'Ciudad desconocida';
+      const country = data.address?.country || 'País desconocido';
+
+      return `${city}, ${country}`;
+    } catch (error) {
+      console.error('Error al traducir coordenadas a ciudad/país:', error);
+      throw error;
+    }
+  }
 }
