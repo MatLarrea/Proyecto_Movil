@@ -46,12 +46,24 @@ export class ComidasPage implements OnInit {
 
   // Abrir el modal para crear una receta
   openModal() {
+    // Inicializa el objeto receta con valores vacíos
+    this.receta = {
+      nombre: '',
+      ingredientes: '',
+      modoPreparacion: '',
+      foto: '',
+      userId: '',
+      mealId: ''
+    };
+  
+    // Abre el modal
     this.isModalOpen = true;
   }
 
   // Cerrar el modal de crear receta
   closeModal() {
     this.isModalOpen = false;
+    
   }
 
   // Abrir el modal de detalle de una receta
