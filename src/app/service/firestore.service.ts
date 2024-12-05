@@ -19,12 +19,16 @@ export class FirestoreService {
     return collection.doc(id).set(data);
   }
 
-  getItem(path: string){
+  async getItem(path: string){
 
+    let items = []
     console.log("Estoy leyendo una coleccion")
-    this.database.collection(path).valueChanges().subscribe( (res) => {
-      console.log('Items: ',res);
+    await this.database.collection(path).valueChanges().subscribe( (res) => {
+      res.forEach(item => {
+        items.push(item)
+      });
     });
+    console.log('Items: ', items)
+    return items
   }
-
 }

@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { StorageService } from '../service/Storage.service';
 import { GeolocationService } from '../service/geolocation-service.service';
-
+import { uploadMeals } from '../use-cases/upload-meals.use-case';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { FirestoreService } from '../service/firestore.service';
 @Component({
   selector: 'app-comidas',
   templateUrl: './comidas.page.html',
@@ -14,24 +16,27 @@ export class ComidasPage implements OnInit {
     nombre: '',
     ingredientes: '',
     modoPreparacion: '',
-    foto: ''
+    foto: '',
+    userId: '',
+    mealId: ''
   };
 
   recetaSeleccionada: any = null;
   isModalOpen: boolean = false;
   isModalDetalleOpen: boolean = false;
 
-  constructor(private storageService: StorageService, private geolocationService: GeolocationService) {}
+  constructor(private storageService: StorageService, private geolocationService: GeolocationService, private mealUseCase: uploadMeals, private firestore: AngularFirestore, private firestoreService: FirestoreService) {}
 
   ngOnInit() {
     this.cargarRecetas();
-    console.log('Localizacion: ', this.geolocationService.getCurrentLocation())
   }
 
   // Cargar las recetas desde el Storage
   async cargarRecetas() {
-    const recetasGuardadas = await this.storageService.get('recetas') || [];
+    this.recetas.length = 0;
+    const recetasGuardadas = await this.firestoreService.getItem('meals');
     this.recetas = recetasGuardadas;
+    console.log('RecetasGuardadas: ', this.recetas)
   }
 
   // Abrir el modal para crear una receta
@@ -75,22 +80,22 @@ export class ComidasPage implements OnInit {
   // Función para crear una nueva receta
   async crearReceta() {
     try {
-      const recetasGuardadas = await this.storageService.get('recetas') || [];
+      
       const nuevaReceta = {
         nombre: this.receta.nombre,
         ingredientes: this.receta.ingredientes,
         modoPreparacion: this.receta.modoPreparacion,
-        foto: this.receta.foto
+        foto: this.receta.foto,
+        userId: '',
+        mealId: ''
       };
 
-      // Agregar la nueva receta al almacenamiento
-      recetasGuardadas.push(nuevaReceta);
-      await this.storageService.set('recetas', recetasGuardadas);
-
+      await this.mealUseCase.uploadMeal(nuevaReceta);
       console.log('Receta guardada con éxito');
-      this.cargarRecetas();  // Recargar las recetas después de guardar
       console.log("Storage recetas: ", this.storageService.get('recetas'))
+      this.cargarRecetas();
       this.closeModal();  // Cerrar el modal
+
     } catch (error) {
       console.error('Error al guardar la receta:', error);
     }
@@ -98,12 +103,10 @@ export class ComidasPage implements OnInit {
 
   // Función para eliminar una receta
   async eliminarReceta(receta: any) {
-    // Filtrar las recetas para eliminar la seleccionada
-    this.recetas = this.recetas.filter(r => r.nombre !== receta.nombre);
-
-    // Guardar nuevamente las recetas sin la eliminada
-    await this.storageService.set('recetas', this.recetas);
-    
+    await this.mealUseCase.deleteMeal(receta);
+    this.cargarRecetas(); 
+    this.closeModalDetalle();
+    console.log("Storage recetas: ", this.storageService.get('recetas'))
   }
 
 
