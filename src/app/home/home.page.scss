@@ -64,8 +64,8 @@ ion-content {
 
 .avatar-container img {
   width: 100%;
-  height: auto;
-  border-radius: 50%; /* Redondear la imagen para mantener estilo avatar */
+  height: 100%;
+  //border-radius: 50%; /* Redondear la imagen para mantener estilo avatar */
   box-shadow: none; /* Evitar cualquier sombra que interfiera */
   z-index: 1; /* Asegurarse de que quede al frente */
 }
