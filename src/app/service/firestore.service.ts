@@ -19,16 +19,27 @@ export class FirestoreService {
     return collection.doc(id).set(data);
   }
 
-  async getItem(path: string){
+  async getItem(path: string): Promise<any[]> {
+    let items = [];
+    console.log("Estoy leyendo una colección");
 
-    let items = []
-    console.log("Estoy leyendo una coleccion")
-    await this.database.collection(path).valueChanges().subscribe( (res) => {
-      res.forEach(item => {
-        items.push(item)
-      });
+    // Utiliza una Promesa para esperar a que los datos se carguen
+    await new Promise<void>((resolve, reject) => {
+        this.database.collection(path).valueChanges().subscribe(
+            (res) => {
+                res.forEach(item => {
+                    items.push(item);
+                });
+                resolve(); // Resuelve la promesa cuando los datos se han cargado
+            },
+            (error) => {
+                console.error('Error al leer la colección:', error);
+                reject(error); // Rechaza la promesa en caso de error
+            }
+        );
     });
-    console.log('Items: ', items)
-    return items
+
+    console.log('Items: ', items);
+    return items;
   }
 }

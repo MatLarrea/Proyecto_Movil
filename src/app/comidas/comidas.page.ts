@@ -33,9 +33,14 @@ export class ComidasPage implements OnInit {
 
   // Cargar las recetas desde el Storage
   async cargarRecetas() {
-    this.recetas.length = 0;
-    const recetasGuardadas = await this.firestoreService.getItem('meals');
-    this.recetas = recetasGuardadas;
+    this.recetas = []; 
+    const recetasGuardadas = await this.firestoreService.getItem('meals'); 
+    recetasGuardadas.forEach(nuevaReceta => { 
+      if (!this.recetas.some(receta => receta.mealId === nuevaReceta.mealId)) { 
+        this.recetas.push(nuevaReceta); 
+      } 
+    });
+
     console.log('RecetasGuardadas: ', this.recetas)
   }
 
@@ -92,7 +97,7 @@ export class ComidasPage implements OnInit {
 
       await this.mealUseCase.uploadMeal(nuevaReceta);
       console.log('Receta guardada con éxito');
-      console.log("Storage recetas: ", this.storageService.get('recetas'))
+      console.log("recetas: ", this.recetas)
       this.cargarRecetas();
       this.closeModal();  // Cerrar el modal
 
