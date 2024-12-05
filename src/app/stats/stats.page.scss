@@ -17,6 +17,7 @@ ion-item {
   --background: #363232; /* Color de fondo de los campos */
   border-radius: 15px; /* Aplica el borde redondeado */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera para darle profundidad */
+  opacity: 80%;
 }
 
 /* Estilo para el ion-input */
@@ -48,6 +49,7 @@ ion-button {
   --background: #00BF86; /* Color verde para otros botones */
   --color: white;
   padding: 10px 0;
+  opacity: 80%;
 }
 
 /* Botones con fondo transparente (clear) */

@@ -39,14 +39,34 @@ ion-card-header {
 }
 
 /* Estilo específico para la tarjeta de lista de comidas */
-.card-list ion-card-header {
-  background-color: #00BF86; /* Verde */
-  text-align: center;
+.card-list {
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.1); /* Fondo translúcido */
+  backdrop-filter: blur(10px); /* Desenfoque */
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+/* Encabezado de la tarjeta con glassmorphism */
+.card-list ion-card-header {
+  background: rgba(0, 191, 134, 0.2); /* Verde translúcido */
+  backdrop-filter: blur(8px); /* Desenfoque */
+  border-radius: 8px 8px 0 0; /* Bordes redondeados solo en la parte superior */
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Borde translúcido */
+  padding: 10px;
+  margin-bottom: 5px;
+}
+
+/* Estilo para el título dentro del encabezado */
 .card-list ion-card-title {
   font-size: 18px;
+  color: white;
 }
+
+
 
 .card-content {
   display: flex;
@@ -92,6 +112,8 @@ ion-item.recipe-name {
 ion-modal {
   --height: 80%;
   --width: 90%;
+  opacity: 95%;
+  border-radius: 5px;
 }
 
 .logo-container {
@@ -107,3 +129,6 @@ ion-modal {
   height: auto;
 }
 
+ion-button{
+  opacity: 80%;
+}

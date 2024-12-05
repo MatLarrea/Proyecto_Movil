@@ -19,13 +19,21 @@ ion-content {
     padding: 32px; /* Espacio a los lados */
     gap: 100px; /* Espacio entre input-container y buttons-container */
     height: 100%; /* Asegura que el contenedor ocupe todo el espacio disponible */
+    
+ }
+ .campos{
+ opacity: 80%; 
+ 
  }
 
+ 
 ion-button{
   --background: #00BF86;
+  opacity: 80%;
 
   
 }
+
 
 .texto{
   color: #fff;

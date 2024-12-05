@@ -50,19 +50,41 @@ ion-content {
 }
 
 .profile {
-  --inner-padding-start: 20px; 
-  --inner-padding-end: 20px; 
-  --inner-padding-top: 20px; 
-  --inner-padding-bottom: 20px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.1); /* Fondo negro translúcido al 70% */
+  backdrop-filter: blur(10px); /* Efecto de desenfoque */
+  border-radius: 12px; /* Bordes redondeados */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Borde translúcido */
+  overflow: hidden; /* Asegura que el contenido no se desborde */
 }
 
 .avatar-container img {
   width: 100%;
-  height: 100%;
+  height: auto;
+  border-radius: 50%; /* Redondear la imagen para mantener estilo avatar */
+  box-shadow: none; /* Evitar cualquier sombra que interfiera */
+  z-index: 1; /* Asegurarse de que quede al frente */
 }
 
-.profile-info{
-  text-align: start;
+.profile ion-label {
+  z-index: 2; /* Garantizar que el texto esté visible sobre el fondo */
+  margin-left: 16px;
+}
+
+.profile::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit; /* Hereda fondo con blur */
+  z-index: 0; /* Fondo detrás de todo */
+  opacity: 0.8; /* Reduce ligeramente el impacto del fondo en la capa */
 }
 
 .ion-toolbar{
@@ -70,3 +92,38 @@ ion-content {
   align-items: start;
 }
 
+.stats {
+    position: relative;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1); /* Fondo translúcido */
+    backdrop-filter: blur(10px); /* Desenfoque del fondo */
+    border-radius: 12px; /* Bordes redondeados */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde translúcido */
+    overflow: hidden; /* Asegura que el contenido no se desborde */
+    color: #fff; /* Asegura que el texto sea visible sobre el fondo */
+}
+
+.stats ion-card-content {
+    position: relative;
+    z-index: 2; /* Garantiza que el contenido esté encima del efecto de fondo */
+}
+
+.stats::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit; /* Hereda el fondo translúcido */
+    z-index: 0; /* Coloca el fondo detrás del contenido */
+    opacity: 0.8; /* Ajusta la visibilidad del fondo */
+}
+
+p {
+    margin: 8px 0; /* Espaciado entre líneas */
+}
+ion-button{
+  opacity: 80%;
+}
